@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NiBiGo AI Trip Planner — Day18 Track1 Lab</title>
+  <meta name="description" content="Human-Centered AI Design prototype for NiBiGo AI Trip Planner." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0d2d44;
+      --navy-2: #143a54;
+      --teal: #0f5964;
+      --teal-2: #0d6b76;
+      --gold: #c4922f;
+      --gold-2: #e9c76d;
+      --cream: #f7f0e4;
+      --cream-2: #fffaf0;
+      --paper: #fffdf8;
+      --line: #e5d9c8;
+      --text: #122d42;
+      --muted: #776d64;
+      --green: #1f8a5b;
+      --orange: #b66c13;
+      --red: #bd3c32;
+      --shadow: 0 18px 55px rgba(13, 45, 68, 0.12);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Lora", Georgia, serif;
+      color: var(--text);
+      background: var(--cream);
+      overflow-x: hidden;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 28px 22px;
+      background: var(--navy);
+      color: #fff;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .brand {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 34px;
+    }
+
+    .brand-mark {
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      color: var(--navy);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 33px;
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      color: #fff;
+    }
+
+    .brand p {
+      margin: 12px 0 0;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .side-menu {
+      display: grid;
+      gap: 12px;
+    }
+
+    .side-item {
+      width: 100%;
+      min-height: 64px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(255, 255, 255, 0.05);
+      color: #f9f4ea;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: 0.18s ease;
+    }
+
+    .side-item span {
+      color: var(--gold-2);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .side-item:hover,
+    .side-item.active {
+      background: rgba(233, 199, 109, 0.16);
+      border-color: rgba(233, 199, 109, 0.65);
+      transform: translateX(2px);
+    }
+
+    .sidebar-note {
+      margin-top: 28px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .sidebar-note strong {
+      color: #fff;
+    }
+
+    .sidebar-note p {
+      margin: 8px 0 0;
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 34px clamp(24px, 4vw, 64px);
+      background: rgba(247, 240, 228, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+
+    .topbar h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3vw, 2.25rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 22px;
+      min-height: 48px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--navy);
+      color: #fff;
+      box-shadow: 0 16px 32px rgba(13, 45, 68, 0.2);
+    }
+
+    .btn-ghost {
+      background: var(--paper);
+      color: var(--navy);
+      border: 1px solid var(--line);
+    }
+
+    .flow-strip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 22px clamp(24px, 4vw, 64px);
+      background: #f1e8d7;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .flow-step {
+      flex: 0 0 160px;
+      min-height: 82px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+      box-shadow: 0 12px 28px rgba(13, 45, 68, 0.05);
+    }
+
+    .flow-step span {
+      display: block;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .flow-step strong {
+      color: var(--navy);
+      font-size: 0.92rem;
+    }
+
+    .flow-step.active {
+      border-color: var(--gold);
+      background: #fff8e6;
+    }
+
+    .flow-arrow {
+      color: #b8a88c;
+      flex: 0 0 auto;
+    }
+
+    .workspace {
+      padding: clamp(24px, 4vw, 64px);
+    }
+
+    .screen-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.55fr);
+      gap: clamp(24px, 4vw, 48px);
+      align-items: start;
+    }
+
+    .demo-card,
+    .rationale-card {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .demo-card {
+      padding: clamp(20px, 3vw, 34px);
+      overflow: hidden;
+    }
+
+    .rationale-card {
+      padding: 28px;
+      position: sticky;
+      top: 154px;
+    }
+
+    .rationale-card h3 {
+      margin: 0 0 20px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.85rem;
+    }
+
+    .rationale-block+.rationale-block {
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+    }
+
+    .rationale-block h4 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .rationale-block p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-panel {
+      min-height: 450px;
+      padding: clamp(28px, 4vw, 52px);
+      border-radius: 24px;
+      background: radial-gradient(circle at 20% 0%, rgba(233, 199, 109, 0.18), transparent 34%), linear-gradient(145deg, #0d4853, #0d2d44);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-panel .label {
+      color: var(--gold-2);
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .hero-panel h2 {
+      margin: 0;
+      color: #fff;
+      font-size: 45px !important;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      max-width: 720px;
+      white-space: normal;
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+
+    .hero-panel p {
+      color: rgba(255, 255, 255, 0.82);
+      margin: 22px 0 0;
+      font-size: clamp(1rem, 1.35vw, 1.2rem);
+      line-height: 1.7;
+    }
+
+    .capability-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .capability {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      gap: 16px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+    }
+
+    .icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .icon.good {
+      background: #e5f7ec;
+      color: var(--green);
+    }
+
+    .icon.warn {
+      background: #fff3d5;
+      color: var(--orange);
+    }
+
+    .icon.stop {
+      background: #ffe8e6;
+      color: var(--red);
+    }
+
+    .capability h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .capability p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      padding: 14px 16px;
+      color: var(--text);
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 108px;
+      resize: vertical;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .section-title {
+      margin: 0 0 18px;
+      font-size: clamp(1.55rem, 3vw, 2.3rem);
+      letter-spacing: -0.04em;
+    }
+
+    .section-desc {
+      margin: -8px 0 28px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 780px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .timeline-time {
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .timeline-item h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .timeline-item p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f4ead6;
+      color: var(--navy);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .evidence-grid,
+    .choice-grid,
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .info-box {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    .info-box h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .info-box p,
+    .info-box li {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .info-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .choice,
+    .feedback-option {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 18px;
+      padding: 20px;
+      text-align: left;
+      transition: 0.16s ease;
+    }
+
+    .choice:hover,
+    .feedback-option:hover,
+    .choice.selected,
+    .feedback-option.selected {
+      border-color: var(--gold);
+      background: #fff8e6;
+      transform: translateY(-2px);
+    }
+
+    .choice strong,
+    .feedback-option strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .choice span,
+    .feedback-option span {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .compare-card {
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .compare-card.after {
+      border-color: rgba(31, 138, 91, 0.45);
+      background: #f1fbf5;
+    }
+
+    .compare-card h3 {
+      margin: 0 0 14px;
+    }
+
+    .compare-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      background: #fff4d7;
+      border: 1px solid #f1d690;
+      color: #71460d;
+      line-height: 1.65;
+    }
+
+    .notice.danger {
+      background: #ffe9e7;
+      border-color: #f2b3ad;
+      color: #7f241d;
+    }
+
+    .notice.success {
+      background: #e9f9ef;
+      border-color: #afe0c2;
+      color: #195c3d;
+    }
+
+    .status-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px 0 0;
+    }
+
+    .status-pill {
+      padding: 10px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-weight: 700;
+      font-size: 0.86rem;
+    }
+
+    .status-pill.act {
+      color: var(--green);
+    }
+
+    .status-pill.ask {
+      color: var(--orange);
+    }
+
+    .status-pill.stop {
+      color: var(--red);
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .mobile-menu,
+    .backdrop {
+      display: none;
+    }
+
+    @media (max-width: 1180px) {
+      .app-shell {
+        grid-template-columns: 260px minmax(0, 1fr);
+      }
+
+      .sidebar {
+        padding: 24px 18px;
+      }
+
+      .screen-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .rationale-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 920px) {
+
+      .hero-layout,
+      .form-grid,
+      .evidence-grid,
+      .choice-grid,
+      .feedback-grid,
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item .tag {
+        width: fit-content;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app-shell {
+        display: block;
+      }
+
+      .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 100;
+        width: min(84vw, 330px);
+        height: 100vh;
+        transform: translateX(-105%);
+        transition: transform 0.25s ease;
+        box-shadow: 24px 0 60px rgba(0, 0, 0, 0.3);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 90;
+        background: rgba(0, 0, 0, 0.45);
+      }
+
+      .backdrop.open {
+        display: block;
+      }
+
+      .mobile-menu {
+        display: grid;
+        place-items: center;
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 110;
+        width: 56px;
+        height: 56px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--navy);
+        color: #fff;
+        font-size: 1.5rem;
+        box-shadow: 0 18px 40px rgba(13, 45, 68, 0.25);
+      }
+
+      .topbar {
+        padding: 22px 18px;
+      }
+
+      .top-actions {
+        width: 100%;
+      }
+
+      .btn {
+        flex: 1;
+      }
+
+      .flow-strip {
+        padding: 16px 18px;
+      }
+
+      .workspace {
+        padding: 20px 16px 88px;
+      }
+
+      .demo-card,
+      .rationale-card {
+        border-radius: 22px;
+      }
+
+      .hero-panel {
+        min-height: auto;
+      }
+
+      .hero-panel h2 {
+        font-size: 45px !important;
+      }
+    }
+
+
+    /* =========================
+   FINAL CLEAN PATCH
+   - keep full-width layout stable
+   - hero h2 fixed 45px
+   - input footer buttons responsive
+========================= */
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body,
+    button,
+    input,
+    select,
+    textarea,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    div,
+    a,
+    li {
+      font-family: "Lora", Georgia, serif !important;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 100vw;
+      grid-template-columns: clamp(260px, 20vw, 320px) minmax(0, 1fr) !important;
+      overflow-x: hidden;
+    }
+
+    .main,
+    .workspace,
+    .demo-card,
+    .rationale-card,
+    .hero-panel,
+    .capability-list {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .screen-grid {
+      width: 100%;
+      max-width: 100%;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 420px) !important;
+    }
+
+    .hero-layout {
+      grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .capability-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hero-panel {
+      min-height: 360px;
+    }
+
+    .hero-panel h2 {
+      font-size: 45px !important;
+      line-height: 1.12 !important;
+      letter-spacing: -0.03em !important;
+      max-width: 720px !important;
+      white-space: normal !important;
+      word-break: normal !important;
+      overflow-wrap: normal !important;
+      hyphens: none !important;
+    }
+
+    .footer-actions .btn {
+      min-height: 52px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1500px) {
+      .screen-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .rationale-card {
+        position: static !important;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .capability-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app-shell {
+        display: block !important;
+      }
+
+      .hero-panel h2 {
+        font-size: 45px !important;
+      }
+
+      .footer-actions {
+        flex-direction: column;
+      }
+
+      .footer-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Prototype navigation">
+      <div class="brand">
+        <div class="brand-mark">NB</div>
+        <div>
+          <h1>NiBiGo<br>AI Trip Planner</h1>
+          <p>Day18 · Human-Centered AI Design</p>
+        </div>
+      </div>
+
+      <nav class="side-menu" id="sideMenu">
+        <button class="side-item active" data-screen="onboarding"><span>01</span>Onboarding</button>
+        <button class="side-item" data-screen="input"><span>02</span>Trip Input</button>
+        <button class="side-item" data-screen="draft"><span>03</span>AI Draft</button>
+        <button class="side-item" data-screen="evidence"><span>04</span>Evidence</button>
+        <button class="side-item" data-screen="ask"><span>05</span>Ask State</button>
+        <button class="side-item" data-screen="recovery"><span>06</span>Recovery</button>
+        <button class="side-item" data-screen="uncertainty"><span>07</span>Uncertainty</button>
+        <button class="side-item" data-screen="feedback"><span>08</span>Feedback</button>
+        <button class="side-item" data-screen="review"><span>09</span>Final Review</button>
+      </nav>
+
+      <div class="sidebar-note">
+        <strong>Demo path:</strong>
+        <p>Start → Input → Draft → Evidence → Ask → Recovery → Uncertainty → Feedback → Review.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Prototype · AI Travel Planner</p>
+          <h2 id="screenTitle">AI Capability Onboarding</h2>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-ghost" id="resetBtn">Reset demo</button>
+          <button class="btn btn-primary" id="nextBtn">Start</button>
+        </div>
+      </header>
+
+      <section class="flow-strip" aria-label="Flow map">
+        <div class="flow-step active" data-screen="onboarding"><span>Start</span><strong>Onboarding</strong></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" data-screen="input"><span>Input</span><strong>Trip Needs</strong></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" data-screen="draft"><span>Act</span><strong>AI Draft</strong></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" data-screen="ask"><span>Ask</span><strong>Transport</strong></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" data-screen="recovery"><span>Recover</span><strong>Too Intense</strong></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" data-screen="uncertainty"><span>Don't Act</span><strong>Uncertain Data</strong></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" data-screen="review"><span>End</span><strong>Review</strong></div>
+      </section>
+
+      <section class="workspace" id="workspace">
+        <!-- Rendered by js/app.js -->
+      </section>
+    </main>
+  </div>
+
+  <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+  <div class="backdrop" id="backdrop"></div>
+
+  <script>
+    const screens = {
+      onboarding: {
+        title: "AI Capability Onboarding",
+        next: "input",
+        cta: "Start",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <div class="hero-layout">
+            <div class="hero-panel">
+              <div class="label">First-time AI experience</div>
+              <h2>Lên lịch trình Ninh Bình 1 ngày, nhưng người dùng vẫn kiểm soát quyết định.</h2>
+              <p>AI chỉ tạo bản nháp, nêu giả định và cảnh báo rủi ro. Người dùng có thể sửa, bỏ qua, hoàn tác hoặc yêu cầu hỗ trợ người thật.</p>
+            </div>
+            <div class="capability-list">
+              <div class="capability">
+                <div class="icon good">✓</div>
+                <div><h3>AI có thể</h3><p>Tạo bản nháp lịch trình, sắp xếp điểm đến, ước tính thời gian, nêu rủi ro.</p></div>
+              </div>
+              <div class="capability">
+                <div class="icon warn">!</div>
+                <div><h3>AI chưa chắc</h3><p>Giá vé, giờ mở cửa, thời tiết, tình trạng đông khách hoặc còn chỗ.</p></div>
+              </div>
+              <div class="capability">
+                <div class="icon stop">×</div>
+                <div><h3>AI không được làm</h3><p>Không tự đặt tour, không chia sẻ số điện thoại, không cam kết lịch trình tối ưu tuyệt đối.</p></div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <aside class="rationale-card">${rationale("AI biết gì?", "Ở thời điểm đầu, AI chưa biết nhu cầu chuyến đi. Vì vậy màn hình đầu tiên không vội tạo lịch, mà đặt kỳ vọng đúng về khả năng và giới hạn.", "Rủi ro", "Nếu không nói rõ giới hạn, user có thể tin rằng AI cam kết giá vé, giờ mở cửa hoặc booking.", "Quyết định thiết kế", "Hiển thị AI có thể / chưa chắc / không được làm. Đây là System → User explicit feedback.", "Agency", "Don't Act với booking thật và chia sẻ dữ liệu cá nhân. Ask khi cần dữ liệu quan trọng.")}</aside>
+      </div>`
+      },
+      input: {
+        title: "Trip Input — Nhu cầu chuyến đi",
+        next: "draft",
+        cta: "Generate draft",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <h2 class="section-title">Nhập nhanh nhu cầu</h2>
+          <p class="section-desc">Onboarding không biến thành form dài. Chỉ lấy dữ liệu đủ để tạo bản nháp đầu tiên, phần thiếu sẽ hỏi sau.</p>
+          <div class="form-grid">
+            <div class="field"><label>Ngày đi</label><input value="Thứ Bảy tuần này" /></div>
+            <div class="field"><label>Số người</label><input value="2 người" /></div>
+            <div class="field"><label>Xuất phát</label><input value="Hà Nội" /></div>
+            <div class="field"><label>Ngân sách</label><input value="Khoảng 1.500.000đ" /></div>
+            <div class="field"><label>Nhịp đi</label><select><option>Không quá dày</option><option>Đi được nhiều điểm</option><option>Nghỉ dưỡng nhẹ nhàng</option></select></div>
+            <div class="field"><label>Sở thích</label><select><option>Thiên nhiên + chụp ảnh</option><option>Văn hóa / tâm linh</option><option>Ẩm thực địa phương</option></select></div>
+            <div class="field full"><label>Ghi chú</label><textarea>Muốn đi Ninh Bình trong 1 ngày, ưu tiên cảnh đẹp và không muốn quá mệt.</textarea></div>
+          </div>
+          <div class="status-row"><span class="status-pill act">ACT: tạo bản nháp</span><span class="status-pill ask">ASK: còn thiếu phương tiện</span></div>
+          <div class="footer-actions">
+            <button class="btn btn-primary" data-goto="draft">Tạo bản nháp lịch trình</button>
+            <button class="btn btn-ghost" data-goto="ask">Bổ sung phương tiện trước</button>
+            <button class="btn btn-ghost" data-goto="onboarding">Quay lại onboarding</button>
+          </div>
+        </article>
+        <aside class="rationale-card">${rationale("AI biết gì?", "AI biết ngày đi, điểm xuất phát, ngân sách, sở thích và nhịp đi mong muốn.", "AI chưa biết gì?", "Chưa biết phương tiện di chuyển, tình trạng sức khỏe, mức linh hoạt về chi phí.", "Quyết định thiết kế", "Chỉ hỏi dữ liệu tối thiểu để giảm friction. Các giả định quan trọng sẽ được hỏi trong Ask State.", "Feedback", "User input là User → System explicit feedback.")}</aside>
+      </div>`
+      },
+      draft: {
+        title: "AI Draft Itinerary — Bản nháp lịch trình",
+        next: "evidence",
+        cta: "View evidence",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <h2 class="section-title">Lịch trình gợi ý 1 ngày</h2>
+          <p class="section-desc">Đây là bản nháp, chưa phải lịch cuối cùng. AI được tự tạo draft vì rủi ro thấp và user có thể sửa/hoàn tác.</p>
+          <div class="timeline">
+            ${timeline("07:00", "Xuất phát từ Hà Nội", "Dự kiến đi sớm để tránh tắc đường và có đủ thời gian tham quan.", "Giả định")}
+            ${timeline("09:15", "Tràng An", "Đi thuyền, cảnh quan thiên nhiên, phù hợp sở thích chụp ảnh.", "Đề xuất")}
+            ${timeline("12:00", "Ăn trưa địa phương", "Ưu tiên quán gần tuyến đường để không mất thời gian vòng lại.", "Chi phí")}
+            ${timeline("13:30", "Hang Múa", "Điểm ngắm cảnh đẹp nhưng có thể hơi nặng nếu leo nhiều.", "Rủi ro")}
+            ${timeline("16:00", "Cafe / nghỉ nhẹ", "Giảm cường độ trước khi quay về Hà Nội.", "Phục hồi")}
+            ${timeline("17:30", "Quay về Hà Nội", "Kết thúc lịch trình trong ngày.", "Kết thúc")}
+          </div>
+          <div class="footer-actions"><button class="btn btn-primary" data-goto="evidence">Xem dữ kiện & giả định</button><button class="btn btn-ghost" data-goto="recovery">Lịch hơi dày</button></div>
+        </article>
+        <aside class="rationale-card">${rationale("Agency", "AI được Act bằng cách tạo bản nháp vì chưa có hành động thật ngoài đời và dễ sửa.", "Rủi ro", "Lịch có thể quá dày hoặc thời gian di chuyển chưa chính xác do thiếu phương tiện.", "Quyết định thiết kế", "Gắn nhãn 'Giả định', 'Đề xuất', 'Rủi ro' để user không nhầm bản nháp là kết luận chắc chắn.", "Recovery", "User có thể bấm 'Lịch hơi dày' để chuyển sang luồng khôi phục.")}</aside>
+      </div>`
+      },
+      evidence: {
+        title: "Evidence & Assumptions — Dữ kiện và giả định",
+        next: "ask",
+        cta: "Continue",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <h2 class="section-title">AI đã dựa vào gì?</h2>
+          <p class="section-desc">Màn này giúp user phân biệt dữ kiện người dùng cung cấp, giả định của AI và thông tin chưa chắc chắn.</p>
+          <div class="evidence-grid">
+            <div class="info-box"><h3>Dữ kiện user cung cấp</h3><ul><li>Đi 1 ngày từ Hà Nội</li><li>2 người</li><li>Ngân sách khoảng 1.500.000đ</li><li>Thích thiên nhiên, chụp ảnh</li></ul></div>
+            <div class="info-box"><h3>Giả định của AI</h3><ul><li>Xuất phát buổi sáng</li><li>Sức khỏe bình thường</li><li>Có thể di chuyển liên tục trong ngày</li><li>Chưa biết phương tiện</li></ul></div>
+            <div class="info-box"><h3>Thông tin chưa chắc</h3><ul><li>Giờ mở cửa thực tế</li><li>Giá vé tại ngày đi</li><li>Thời tiết</li><li>Lượng khách cuối tuần</li></ul></div>
+            <div class="info-box"><h3>User có thể kiểm soát</h3><ul><li>Sửa từng chặng</li><li>Đổi nhịp đi</li><li>Bỏ địa điểm</li><li>Yêu cầu hỗ trợ người thật</li></ul></div>
+          </div>
+        </article>
+        <aside class="rationale-card">${rationale("Trust calibration", "Không tăng niềm tin mù quáng. Mục tiêu là giúp user tin đúng mức.", "Điều có thể sai", "Nếu user không thấy giả định, họ có thể nghĩ AI đã kiểm tra mọi nguồn dữ liệu thời gian thực.", "Quyết định thiết kế", "Tách Dữ kiện / Giả định / Chưa chắc / Kiểm soát để tăng minh bạch.", "Feedback", "Đây là System → User explicit feedback.")}</aside>
+      </div>`
+      },
+      ask: {
+        title: "Ask State — Thiếu phương tiện di chuyển",
+        next: "recovery",
+        cta: "Apply choice",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <div class="notice"><strong>AI cần hỏi thêm:</strong> Phương tiện ảnh hưởng lớn tới thời gian di chuyển, số điểm nên đi và mức độ mệt.</div>
+          <h2 class="section-title">Bạn dự định đi bằng phương tiện nào?</h2>
+          <div class="choice-grid" id="transportChoices">
+            <button class="choice"><strong>Ô tô cá nhân</strong><span>Chủ động thời gian, phù hợp lịch 1 ngày.</span></button>
+            <button class="choice"><strong>Xe limousine</strong><span>Cần khớp giờ đón/trả, lịch nên ít điểm hơn.</span></button>
+            <button class="choice"><strong>Xe máy</strong><span>Linh hoạt nhưng mệt hơn, cần thêm thời gian nghỉ.</span></button>
+            <button class="choice"><strong>Chưa biết</strong><span>Tiếp tục với độ tin cậy trung bình.</span></button>
+          </div>
+          <div class="status-row"><span class="status-pill ask">ASK: cần xác nhận trước</span><span class="status-pill act">ACT: cập nhật thời gian sau khi chọn</span></div>
+        </article>
+        <aside class="rationale-card">${rationale("Tại sao Ask?", "Phương tiện là giả định ảnh hưởng mạnh đến lịch trình. Nếu AI tự đoán sai, lịch có thể không khả thi.", "Rủi ro", "Sai thời gian di chuyển dẫn đến lịch quá dày, trễ điểm tham quan hoặc vượt chi phí.", "Quyết định thiết kế", "AI không tự đoán. Hỏi user bằng lựa chọn nhanh để giảm ma sát.", "Recovery", "Nếu user chọn 'Chưa biết', hệ thống vẫn cho đi tiếp nhưng hạ độ tin cậy.")}</aside>
+      </div>`
+      },
+      recovery: {
+        title: "Recovery — Lịch quá dày",
+        next: "uncertainty",
+        cta: "Next issue",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <div class="notice danger"><strong>User feedback:</strong> “Lịch này hơi mệt. Mình đi với mẹ lớn tuổi, không muốn leo nhiều và không muốn quá nắng.”</div>
+          <h2 class="section-title">AI điều chỉnh lịch để nhẹ hơn</h2>
+          <div class="compare-grid">
+            <div class="compare-card"><h3>Trước khi sửa</h3><ul><li>Tràng An</li><li>Ăn trưa nhanh</li><li>Hang Múa buổi chiều</li><li>Cafe ngắn rồi về</li></ul></div>
+            <div class="compare-card after"><h3>Sau khi sửa</h3><ul><li>Tràng An buổi sáng</li><li>Ăn trưa + nghỉ dài hơn</li><li>Thay Hang Múa bằng điểm nhẹ hơn</li><li>Giảm số điểm, thêm buffer 45 phút</li></ul></div>
+          </div>
+          <div class="notice success" style="margin-top:18px"><strong>Đã hiểu vấn đề:</strong> Giảm hoạt động thể lực, tránh nắng, giữ lịch trong 1 ngày.</div>
+        </article>
+        <aside class="rationale-card">${rationale("AI sai ở đâu?", "AI ban đầu chưa biết có người lớn tuổi nên đề xuất lịch hơi nặng.", "Recovery", "User cung cấp bối cảnh mới → hệ thống xác nhận hiểu vấn đề → tạo lịch nhẹ hơn → user tiếp tục hoàn thành mục tiêu.", "Quyết định thiết kế", "Hiển thị trước/sau để user thấy AI đã sửa đúng điểm nào.", "Feedback", "Đây là User → System explicit feedback.")}</aside>
+      </div>`
+      },
+      uncertainty: {
+        title: "Uncertainty — Dữ liệu chưa chắc chắn",
+        next: "feedback",
+        cta: "Continue",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <div class="notice"><strong>Cảnh báo độ tin cậy:</strong> Giá vé, giờ mở cửa và thời tiết có thể thay đổi theo ngày. AI chưa được phép khẳng định chắc chắn.</div>
+          <h2 class="section-title">Bạn muốn xử lý điểm chưa chắc thế nào?</h2>
+          <div class="choice-grid">
+            <button class="choice"><strong>Giữ lại nhưng đánh dấu cần xác nhận</strong><span>Phù hợp nếu user vẫn thích địa điểm này.</span></button>
+            <button class="choice"><strong>Thay bằng phương án ít rủi ro hơn</strong><span>Phù hợp khi user cần lịch chắc chắn hơn.</span></button>
+            <button class="choice"><strong>Yêu cầu người thật kiểm tra</strong><span>Chỉ gửi thông tin sau khi user xác nhận.</span></button>
+            <button class="choice"><strong>Bỏ điểm này khỏi lịch</strong><span>Giảm rủi ro và giữ lịch nhẹ hơn.</span></button>
+          </div>
+          <div class="status-row"><span class="status-pill stop">DON'T ACT: không tự booking</span><span class="status-pill ask">ASK: hỏi trước khi gửi hỗ trợ</span></div>
+        </article>
+        <aside class="rationale-card">${rationale("Tại sao Don't Act?", "Dữ liệu chưa chắc và hành động booking/chia sẻ thông tin cá nhân có hậu quả ngoài đời.", "Rủi ro", "AI tự cam kết giá/giờ mở cửa có thể làm user trễ lịch hoặc phát sinh chi phí.", "Quyết định thiết kế", "AI chỉ cảnh báo và đưa lựa chọn. User quyết định giữ, thay, bỏ hoặc hỏi người thật.", "Control", "User có quyền từ chối và hoàn tác trước khi lịch cuối được lưu.")}</aside>
+      </div>`
+      },
+      feedback: {
+        title: "Feedback Loop — Phản hồi hai chiều",
+        next: "review",
+        cta: "Finish",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <h2 class="section-title">Lịch trình này chưa phù hợp ở đâu?</h2>
+          <p class="section-desc">Không chỉ dùng nút thích/không thích. Feedback cần đủ ngữ cảnh để hệ thống cải thiện.</p>
+          <div class="feedback-grid">
+            <button class="feedback-option"><strong>Quá dày</strong><span>Muốn giảm số điểm và thêm thời gian nghỉ.</span></button>
+            <button class="feedback-option"><strong>Vượt ngân sách</strong><span>Muốn thay điểm/ăn uống tiết kiệm hơn.</span></button>
+            <button class="feedback-option"><strong>Không hợp sở thích</strong><span>Muốn nhiều thiên nhiên hoặc check-in hơn.</span></button>
+            <button class="feedback-option"><strong>Di chuyển xa</strong><span>Muốn gom điểm theo tuyến gần nhau.</span></button>
+          </div>
+          <div class="evidence-grid" style="margin-top:18px">
+            <div class="info-box"><h3>Explicit feedback</h3><p>User chọn lý do rõ ràng: quá dày, vượt ngân sách, không hợp sở thích.</p></div>
+            <div class="info-box"><h3>Implicit feedback</h3><p>Hệ thống ghi nhận user xóa nhiều điểm, mở chi phí nhiều lần, undo sau khi tối ưu.</p></div>
+          </div>
+        </article>
+        <aside class="rationale-card">${rationale("User → System", "User phản hồi rõ bằng lựa chọn. Hành vi chỉnh sửa cũng là tín hiệu ngầm.", "System → User", "Hệ thống phản hồi bằng cảnh báo, badge độ tin cậy và trạng thái trước/sau.", "Quyết định thiết kế", "Implicit feedback không được dùng để tự quyết thay user. Nó chỉ kích hoạt Ask.", "Business value", "Feedback giúp cải thiện lịch trình, giảm rủi ro và tạo insight nếu user yêu cầu hỗ trợ người thật.")}</aside>
+      </div>`
+      },
+      review: {
+        title: "Final Review — Xem lại trước khi lưu",
+        next: "onboarding",
+        cta: "Restart",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <h2 class="section-title">Lịch trình cuối: nhẹ hơn, minh bạch hơn</h2>
+          <p class="section-desc">User xem lại lịch trước khi lưu/chia sẻ. Những phần chưa chắc vẫn được đánh dấu, không bị ẩn đi.</p>
+          <div class="timeline">
+            ${timeline("07:00", "Xuất phát từ Hà Nội", "Đi sớm để có buffer thời gian.", "Đã xác nhận")}
+            ${timeline("09:30", "Tràng An", "Giữ điểm chính vì hợp sở thích thiên nhiên.", "Ưu tiên")}
+            ${timeline("12:15", "Ăn trưa + nghỉ", "Tăng thời gian nghỉ vì có người lớn tuổi.", "Đã sửa")}
+            ${timeline("14:30", "Điểm tham quan nhẹ", "Thay hoạt động leo nhiều bằng lựa chọn ít mệt hơn.", "Recovery")}
+            ${timeline("16:00", "Cafe / mua quà", "Lịch có khoảng nghỉ trước khi về.", "Nhẹ hơn")}
+          </div>
+          <div class="footer-actions"><button class="btn btn-primary">Lưu lịch trình</button><button class="btn btn-ghost">Chia sẻ bản nháp</button><button class="btn btn-ghost">Yêu cầu người thật kiểm tra</button></div>
+        </article>
+        <aside class="rationale-card">${rationale("Kết quả", "User vẫn hoàn thành mục tiêu: có lịch trình 1 ngày phù hợp hơn sau khi AI sai/thiếu thông tin.", "Control", "Trước khi lưu hoặc gửi hỗ trợ, user được xem lại và xác nhận.", "Điều được ghi nhớ", "Hệ thống có thể ghi nhớ sở thích nếu user đồng ý; không tự lưu thông tin nhạy cảm.", "Rủi ro còn lại", "Giá vé, thời tiết, giờ mở cửa vẫn cần xác minh gần ngày đi.")}</aside>
+      </div>`
+      }
+    };
+
+    function rationale(h1, p1, h2, p2, h3, p3, h4, p4) {
+      return `
+    <h3>Design rationale</h3>
+    <div class="rationale-block"><h4>${h1}</h4><p>${p1}</p></div>
+    <div class="rationale-block"><h4>${h2}</h4><p>${p2}</p></div>
+    <div class="rationale-block"><h4>${h3}</h4><p>${p3}</p></div>
+    <div class="rationale-block"><h4>${h4}</h4><p>${p4}</p></div>
+  `;
+    }
+
+    function timeline(time, title, desc, tag) {
+      return `<div class="timeline-item"><div class="timeline-time">${time}</div><div><h3>${title}</h3><p>${desc}</p></div><span class="tag">${tag}</span></div>`;
+    }
+
+
+    const order = ["onboarding", "input", "draft", "evidence", "ask", "recovery", "uncertainty", "feedback", "review"];
+    let current = "onboarding";
+
+    const workspace = document.getElementById("workspace");
+    const screenTitle = document.getElementById("screenTitle");
+    const nextBtn = document.getElementById("nextBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const sideItems = [...document.querySelectorAll(".side-item")];
+    const flowSteps = [...document.querySelectorAll(".flow-step")];
+    const sidebar = document.getElementById("sidebar");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const backdrop = document.getElementById("backdrop");
+
+    function render(screenId) {
+      const screen = screens[screenId] || screens.onboarding;
+      current = screenId;
+      screenTitle.textContent = screen.title;
+      nextBtn.textContent = screen.cta || "Next";
+      workspace.innerHTML = screen.html;
+
+      sideItems.forEach(item => item.classList.toggle("active", item.dataset.screen === screenId));
+      flowSteps.forEach(item => item.classList.toggle("active", item.dataset.screen === screenId));
+
+      workspace.querySelectorAll("[data-goto]").forEach(btn => {
+        btn.addEventListener("click", () => render(btn.dataset.goto));
+      });
+
+      workspace.querySelectorAll(".choice, .feedback-option").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const group = btn.parentElement.querySelectorAll(".choice, .feedback-option");
+          group.forEach(x => x.classList.remove("selected"));
+          btn.classList.add("selected");
+        });
+      });
+
+      closeMenu();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function nextScreen() {
+      const screen = screens[current];
+      render(screen.next || order[(order.indexOf(current) + 1) % order.length]);
+    }
+
+    function resetDemo() { render("onboarding"); }
+
+    function openMenu() {
+      sidebar.classList.add("open");
+      backdrop.classList.add("open");
+      mobileMenu.textContent = "×";
+    }
+    function closeMenu() {
+      sidebar.classList.remove("open");
+      backdrop.classList.remove("open");
+      mobileMenu.textContent = "☰";
+    }
+
+    sideItems.forEach(item => item.addEventListener("click", () => render(item.dataset.screen)));
+    flowSteps.forEach(item => item.addEventListener("click", () => render(item.dataset.screen)));
+    nextBtn.addEventListener("click", nextScreen);
+    resetBtn.addEventListener("click", resetDemo);
+    mobileMenu.addEventListener("click", () => sidebar.classList.contains("open") ? closeMenu() : openMenu());
+    backdrop.addEventListener("click", closeMenu);
+    window.addEventListener("resize", () => { if (window.innerWidth > 760) closeMenu(); });
+
+    render(current);
+
+  </script>
+</body>
+
+</html>
