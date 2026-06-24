@@ -13,7 +13,8 @@ Bộ sản phẩm tích hợp bao gồm Prototype tương tác và Hệ tài li�
 
 Dự án được tổ chức tự giải thích và đóng gói gọn gàng (Self-contained) để mở trực tiếp trên mọi trình duyệt:
 * **Màn hình chính:**
-  * [index.html](./index.html) — Bảng điều khiển thuyết trình tích hợp 18 mục và **Giả lập điện thoại di động (Mobile Simulator) kịch bản Day 20**.
+  * [day18.html](./day18.html) — Prototype tương tác Day 18 gốc (gồm bộ chuyển đổi sang console Day 20 và Simulator di động).
+  * [index.html](./index.html) — **[MỚI]** Bảng điều khiển thuyết trình tích hợp 18 mục và **Giả lập điện thoại di động (Mobile Simulator) kịch bản Day 20**.
 * **Thư mục tài liệu phân tích (`docs/`):**
   * [day20-retention-canvas.md](./docs/day20-retention-canvas.md) — Customer Retention Canvas (Problem, Persona, Anti-Persona, Frequency).
   * [day20-core-action-metrics.md](./docs/day20-core-action-metrics.md) — Định nghĩa Core Job, Core Action, Active User và chỉ số giữ chân 7 ngày.
@@ -78,4 +79,4 @@ Dự án đã đáp ứng đầy đủ các tiêu chí đánh giá của bài La
 - [x] **Onboarding → First Core Action:** Có Audit Current Flow cụ thể. Cắt giảm ma sát (từ 9 bước xuống 7 bước). Có thiết kế Before/After tường minh dẫn tới First Core Action. Giữ và cải thiện tốt Recovery Flow cảnh báo khả thi từ Day 18.
 - [x] **Metrics & Habit:** Xây dựng Measurement Ladder bài bản. Định nghĩa "7-day Planning Return Rate" làm Retention Metric cực kì hợp lý với du lịch (low-frequency). Xây dựng vòng lặp Nature/Nurture và Hook theo cấp độ chuyến đi.
 - [x] **Tracking:** Event Tracking có định nghĩa đo lường, property đi kèm, giúp tính toán trực tiếp được Input Metrics.
-- [x] **Submission:** Hoàn thiện giao diện Day 20 (`index.html`) kèm đầy đủ bảng điều khiển thuyết trình. Cung cấp sẵn Demo Path kịch bản tối ưu trong 8 phút (Section 17).
+- [x] **Submission:** Phân định rạch ròi Day 18 (`day18.html`) và Day 20 (`index.html`). Cung cấp sẵn Demo Path kịch bản tối ưu trong 8 phút (Section 17).
