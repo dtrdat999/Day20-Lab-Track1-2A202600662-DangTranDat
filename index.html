@@ -8,7 +8,7 @@
   <meta name="description" content="Human-Centered AI Design prototype for NiBiGo AI Trip Planner." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <style>
     :root {
       --navy: #0d2d44;
@@ -800,16 +800,19 @@
 
 
     /* =========================
-   FINAL CLEAN PATCH
+   FINAL CLEAN PATCH & DAY 20 PREMIUM STYLES
    - keep full-width layout stable
    - hero h2 fixed 45px
    - input footer buttons responsive
-========================= */
+   - custom worksheets styling (canvas, hook, ladder, tables)
+   ========================= */
     html,
     body {
       width: 100%;
       max-width: 100%;
       overflow-x: hidden;
+      margin: 0;
+      padding: 0;
     }
 
     body,
@@ -831,11 +834,91 @@
       font-family: "Lora", Georgia, serif !important;
     }
 
+    .top-mode-switcher {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--navy);
+      padding: 14px 28px;
+      border-bottom: 3px solid var(--gold);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(13, 45, 68, 0.18);
+    }
+
+    .switcher-brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .switcher-brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      color: var(--navy);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .switcher-brand-text {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .switcher-brand-text span {
+      color: var(--gold-2);
+      font-weight: 400;
+      font-size: 0.9rem;
+      margin-left: 8px;
+    }
+
+    .switcher-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .switch-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 30px;
+      padding: 8px 18px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .switch-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .switch-btn.active {
+      background: var(--gold);
+      color: var(--navy);
+      border-color: var(--gold);
+      box-shadow: 0 4px 12px rgba(196, 146, 47, 0.25);
+    }
+
     .app-shell {
       width: 100%;
       max-width: 100vw;
       grid-template-columns: clamp(260px, 20vw, 320px) minmax(0, 1fr) !important;
       overflow-x: hidden;
+      min-height: calc(100vh - 66px);
+      display: grid;
     }
 
     .main,
@@ -885,7 +968,450 @@
       font-weight: 700;
     }
 
-    @media (max-width: 1500px) {
+    /* ==========================================
+       MOBILE PHONE SIMULATOR FOR PROTOTYPE SCREENS
+       ========================================== */
+    .demo-card {
+      width: 380px !important;
+      height: 800px !important;
+      background: var(--paper) !important;
+      border: 12px solid #1c1c1e !important;
+      border-radius: 46px !important;
+      box-shadow: 0 25px 60px rgba(13, 45, 68, 0.25), 0 0 0 1px #2c2c2e !important;
+      position: relative !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      margin: 0 auto !important;
+      flex-shrink: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Phone Status Bar */
+    .phone-status-bar {
+      height: 44px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      z-index: 10;
+      border-bottom: 1px solid rgba(0,0,0,0.03);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .phone-notch {
+      width: 120px;
+      height: 20px;
+      background: #1c1c1e;
+      border-bottom-left-radius: 14px;
+      border-bottom-right-radius: 14px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      z-index: 11;
+    }
+
+    .phone-icons {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .phone-icons span {
+      font-size: 0.8rem;
+    }
+
+    /* Phone Body Scrollable Content */
+    .phone-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 22px 20px;
+      background: var(--paper);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Customize scrollbar inside phone body */
+    .phone-body::-webkit-scrollbar {
+      width: 5px;
+    }
+    .phone-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .phone-body::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+    }
+
+    /* Phone Home Indicator */
+    .phone-home-indicator-bar {
+      height: 24px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      z-index: 10;
+      border-top: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .phone-home-indicator {
+      width: 120px;
+      height: 5px;
+      background: #000;
+      border-radius: 99px;
+    }
+
+    /* Constrain grids and elements inside the phone simulator */
+    .demo-card .capability-list,
+    .demo-card .form-grid,
+    .demo-card .evidence-grid,
+    .demo-card .choice-grid,
+    .demo-card .feedback-grid,
+    .demo-card .compare-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .demo-card .footer-actions {
+      flex-direction: column !important;
+      gap: 10px !important;
+      margin-top: 20px !important;
+    }
+
+    .demo-card .footer-actions .btn {
+      width: 100% !important;
+      margin: 0 !important;
+    }
+
+    .demo-card .section-title {
+      font-size: 1.6rem !important;
+      margin-bottom: 12px !important;
+      line-height: 1.2 !important;
+    }
+
+    .demo-card .section-desc {
+      font-size: 0.9rem !important;
+      margin-bottom: 20px !important;
+      line-height: 1.5 !important;
+    }
+
+    .demo-card .hero-panel h2 {
+      font-size: 26px !important;
+      line-height: 1.25 !important;
+    }
+
+    .demo-card .hero-panel p {
+      font-size: 0.95rem !important;
+      line-height: 1.5 !important;
+    }
+
+    .demo-card .hero-panel {
+      min-height: auto !important;
+      padding: 24px 20px !important;
+    }
+
+    .demo-card .timeline-item {
+      padding: 14px !important;
+      gap: 12px !important;
+    }
+
+    .demo-card .notice {
+      margin-bottom: 12px !important;
+      padding: 12px !important;
+      font-size: 0.9rem !important;
+    }
+
+    .demo-card .notice.danger {
+      margin-left: 0 !important; /* Reset timeline offset for mobile width */
+      width: auto !important;
+    }
+
+    @media (max-width: 440px) {
+      .demo-card {
+        width: 100% !important;
+        max-width: 350px !important;
+        height: 720px !important;
+        border-radius: 36px !important;
+        border-width: 8px !important;
+      }
+      .phone-notch {
+        width: 90px;
+        height: 16px;
+      }
+    }
+
+    /* Flow Selector inside Sidebar */
+    .flow-selector-card {
+      margin-bottom: 24px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .flow-selector-card label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--gold-2);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+    .flow-select {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--navy-2);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .flow-select:focus {
+      border-color: var(--gold);
+    }
+
+    /* Worksheets CSS Grid & Aesthetics */
+    .ws-section-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 34px;
+      box-shadow: var(--shadow);
+      animation: fadeIn 0.4s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ws-header {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 20px;
+      margin-bottom: 28px;
+    }
+    .ws-header h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 2.2rem;
+      letter-spacing: -0.03em;
+    }
+    .ws-header p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    /* Canvas Card Grid */
+    .canvas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .canvas-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      background: #fff;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(13, 45, 68, 0.03);
+    }
+    .canvas-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(13, 45, 68, 0.08);
+      border-color: var(--gold);
+    }
+    .canvas-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.15rem;
+      color: var(--navy);
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 6px;
+      display: inline-block;
+    }
+    .canvas-card p, .canvas-card li {
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    /* Hook quadrants */
+    .hook-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 24px;
+      position: relative;
+    }
+    .hook-quad {
+      border: 2px dashed var(--line);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      background: #fff;
+      min-height: 200px;
+      transition: all 0.25s ease;
+    }
+    .hook-quad:hover {
+      border-color: var(--gold);
+      background: var(--cream-2);
+    }
+    .hook-quad h3 {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 1.25rem;
+    }
+    .hook-quad ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .hook-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--gold);
+      color: var(--navy);
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 15px rgba(196, 146, 47, 0.4);
+      border: 4px solid var(--paper);
+    }
+    @media (max-width: 800px) {
+      .hook-grid { grid-template-columns: 1fr; }
+      .hook-center { display: none; }
+    }
+
+    /* Measurement Ladder visual styles */
+    .ladder-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      margin: 40px 0;
+    }
+    .ladder-node {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px 30px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      position: relative;
+      max-width: 550px;
+      width: 100%;
+    }
+    .ladder-node.north-star {
+      border: 3px solid var(--gold);
+      background: #fffdf5;
+    }
+    .ladder-node.north-star h3 {
+      color: var(--gold);
+      font-size: 1.4rem;
+      margin: 0 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .ladder-node h3 {
+      margin: 0 0 6px;
+      color: var(--navy);
+      font-size: 1.15rem;
+    }
+    .ladder-node p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .ladder-inputs-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      width: 100%;
+    }
+    @media (max-width: 760px) {
+      .ladder-inputs-row { grid-template-columns: 1fr; }
+    }
+    .ladder-connector {
+      width: 2px;
+      height: 24px;
+      background: var(--gold);
+    }
+
+    /* Table enhancements */
+    .ws-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+    }
+    .ws-table th, .ws-table td {
+      border: 1px solid var(--line);
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    .ws-table th {
+      background: #f1e8d7;
+      color: var(--navy);
+      font-weight: 700;
+    }
+    .ws-table tr:nth-child(even) {
+      background: var(--cream-2);
+    }
+    .ws-table tr:hover {
+      background: #fffcf5;
+    }
+    .event-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: #eef2f5;
+      border: 1px solid #d0dae2;
+      color: #385064;
+      font-family: monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .prop-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #fff3d5;
+      border: 1px solid #ffe4a0;
+      color: #855d00;
+      font-family: monospace;
+      font-size: 0.8rem;
+      margin: 2px;
+    }
+
+    @media (max-width: 1180px) {
+      .app-shell {
+        grid-template-columns: 260px minmax(0, 1fr);
+      }
+
+      .sidebar {
+        padding: 24px 18px;
+      }
+
       .screen-grid {
         grid-template-columns: 1fr !important;
       }
@@ -896,6 +1422,23 @@
     }
 
     @media (max-width: 920px) {
+      .hero-layout,
+      .form-grid,
+      .evidence-grid,
+      .choice-grid,
+      .feedback-grid,
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item .tag {
+        width: fit-content;
+      }
+
       .capability-list {
         grid-template-columns: 1fr;
       }
@@ -919,42 +1462,54 @@
       }
     }
   </style>
-</head>
-
 <body>
-  <div class="app-shell">
+  <!-- Header Switcher -->
+  <div class="top-mode-switcher">
+    <div class="switcher-brand-wrap">
+      <div class="switcher-brand-logo">NB</div>
+      <div class="switcher-brand-text">NiBiGo Console <span>Day 20 Edition</span></div>
+    </div>
+    <div class="switcher-buttons">
+      <button class="switch-btn active" id="modePrototypeBtn">📱 Interactive Prototype</button>
+      <button class="switch-btn" id="modeWorksheetsBtn">📋 Day 20 Design Worksheets</button>
+    </div>
+  </div>
+
+  <!-- Container 1: Prototype -->
+  <div id="prototypeContainer" class="app-shell">
     <aside class="sidebar" id="sidebar" aria-label="Prototype navigation">
       <div class="brand">
         <div class="brand-mark">NB</div>
         <div>
           <h1>NiBiGo<br>AI Trip Planner</h1>
-          <p>Day18 · Human-Centered AI Design</p>
+          <p>Day18/20 · Human-Centered AI</p>
         </div>
       </div>
 
+      <!-- Flow selector -->
+      <div class="flow-selector-card">
+        <label for="flowSelect">Luồng Demo:</label>
+        <select id="flowSelect" class="flow-select">
+          <option value="day20" selected>Day 20 (Redesigned Flow)</option>
+          <option value="day18">Day 18 (Original Flow)</option>
+        </select>
+      </div>
+
       <nav class="side-menu" id="sideMenu">
-        <button class="side-item active" data-screen="onboarding"><span>01</span>Onboarding</button>
-        <button class="side-item" data-screen="input"><span>02</span>Trip Input</button>
-        <button class="side-item" data-screen="draft"><span>03</span>AI Draft</button>
-        <button class="side-item" data-screen="evidence"><span>04</span>Evidence</button>
-        <button class="side-item" data-screen="ask"><span>05</span>Ask State</button>
-        <button class="side-item" data-screen="recovery"><span>06</span>Recovery</button>
-        <button class="side-item" data-screen="uncertainty"><span>07</span>Uncertainty</button>
-        <button class="side-item" data-screen="feedback"><span>08</span>Feedback</button>
-        <button class="side-item" data-screen="review"><span>09</span>Final Review</button>
+        <!-- Rebuilt dynamically by JS -->
       </nav>
 
       <div class="sidebar-note">
         <strong>Demo path:</strong>
-        <p>Start → Input → Draft → Evidence → Ask → Recovery → Uncertainty → Feedback → Review.</p>
+        <p id="demoPathHint">Loading...</p>
       </div>
     </aside>
 
     <main class="main">
       <header class="topbar">
         <div>
-          <p class="eyebrow">Prototype · AI Travel Planner</p>
-          <h2 id="screenTitle">AI Capability Onboarding</h2>
+          <p class="eyebrow" id="eyebrowText">Prototype · AI Travel Planner</p>
+          <h2 id="screenTitle">Loading...</h2>
         </div>
         <div class="top-actions">
           <button class="btn btn-ghost" id="resetBtn">Reset demo</button>
@@ -963,23 +1518,49 @@
       </header>
 
       <section class="flow-strip" aria-label="Flow map">
-        <div class="flow-step active" data-screen="onboarding"><span>Start</span><strong>Onboarding</strong></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step" data-screen="input"><span>Input</span><strong>Trip Needs</strong></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step" data-screen="draft"><span>Act</span><strong>AI Draft</strong></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step" data-screen="ask"><span>Ask</span><strong>Transport</strong></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step" data-screen="recovery"><span>Recover</span><strong>Too Intense</strong></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step" data-screen="uncertainty"><span>Don't Act</span><strong>Uncertain Data</strong></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step" data-screen="review"><span>End</span><strong>Review</strong></div>
+        <!-- Rebuilt dynamically by JS -->
       </section>
 
       <section class="workspace" id="workspace">
-        <!-- Rendered by js/app.js -->
+        <!-- Rendered dynamically -->
+      </section>
+    </main>
+  </div>
+
+  <!-- Container 2: Worksheets -->
+  <div id="worksheetsContainer" class="app-shell" style="display: none;">
+    <aside class="sidebar" id="wsSidebar" aria-label="Worksheet navigation">
+      <div class="brand">
+        <div class="brand-mark">D20</div>
+        <div>
+          <h1>Design Canvas</h1>
+          <p>Day 20 Lab Worksheets</p>
+        </div>
+      </div>
+      <nav class="side-menu" id="wsMenu">
+        <button class="side-item active" data-ws="canvas"><span>01</span>Retention Canvas</button>
+        <button class="side-item" data-ws="core"><span>02</span>Core Action & Active</button>
+        <button class="side-item" data-ws="frequency"><span>03</span>Natural Frequency</button>
+        <button class="side-item" data-ws="audit"><span>04</span>Onboarding Audit</button>
+        <button class="side-item" data-ws="redesign"><span>05</span>Redesigned Flow</button>
+        <button class="side-item" data-ws="comparison"><span>06</span>Before / After</button>
+        <button class="side-item" data-ws="ladder"><span>07</span>Measurement Ladder</button>
+        <button class="side-item" data-ws="northstar"><span>08</span>North Star & Inputs</button>
+        <button class="side-item" data-ws="nurture"><span>09</span>Nature vs Nurture</button>
+        <button class="side-item" data-ws="hook"><span>10</span>Hook Review</button>
+        <button class="side-item" data-ws="tracking"><span>11</span>Tracking Req</button>
+        <button class="side-item" data-ws="demopath"><span>12</span>Demo Path 8m</button>
+      </nav>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Day 20 Worksheets · NiBiGo</p>
+          <h2 id="wsTitle">Loading...</h2>
+        </div>
+      </header>
+      <section class="workspace" id="wsWorkspace">
+        <!-- Rendered dynamically -->
       </section>
     </main>
   </div>
@@ -988,7 +1569,23 @@
   <div class="backdrop" id="backdrop"></div>
 
   <script>
-    const screens = {
+    // Helpers declared first to avoid hoisting issues
+    function rationale(h1, p1, h2, p2, h3, p3, h4, p4) {
+      return `
+        <h3>Design rationale</h3>
+        <div class="rationale-block"><h4>${h1}</h4><p>${p1}</p></div>
+        <div class="rationale-block"><h4>${h2}</h4><p>${p2}</p></div>
+        <div class="rationale-block"><h4>${h3}</h4><p>${p3}</p></div>
+        <div class="rationale-block"><h4>${h4}</h4><p>${p4}</p></div>
+      `;
+    }
+
+    function timeline(time, title, desc, tag) {
+      return `<div class="timeline-item"><div class="timeline-time">${time}</div><div><h3>${title}</h3><p>${desc}</p></div><span class="tag">${tag}</span></div>`;
+    }
+
+    // Day 18 screens
+    const screensDay18 = {
       onboarding: {
         title: "AI Capability Onboarding",
         next: "input",
@@ -1165,7 +1762,7 @@
           </div>
           <div class="evidence-grid" style="margin-top:18px">
             <div class="info-box"><h3>Explicit feedback</h3><p>User chọn lý do rõ ràng: quá dày, vượt ngân sách, không hợp sở thích.</p></div>
-            <div class="info-box"><h3>Implicit feedback</h3><p>Hệ thống ghi nhận user xóa nhiều điểm, mở chi phí nhiều lần, undo sau khi tối ưu.</p></div>
+            <div class="info-box"><h3>Implicit feedback</h3><p>Hệ thống ghi nhận user xóa nhiều điểm, mở chi phí nhiều lần, undo sau khi AI tối ưu.</p></div>
           </div>
         </article>
         <aside class="rationale-card">${rationale("User → System", "User phản hồi rõ bằng lựa chọn. Hành vi chỉnh sửa cũng là tín hiệu ngầm.", "System → User", "Hệ thống phản hồi bằng cảnh báo, badge độ tin cậy và trạng thái trước/sau.", "Quyết định thiết kế", "Implicit feedback không được dùng để tự quyết thay user. Nó chỉ kích hoạt Ask.", "Business value", "Feedback giúp cải thiện lịch trình, giảm rủi ro và tạo insight nếu user yêu cầu hỗ trợ người thật.")}</aside>
@@ -1194,48 +1791,1035 @@
       }
     };
 
-    function rationale(h1, p1, h2, p2, h3, p3, h4, p4) {
-      return `
-    <h3>Design rationale</h3>
-    <div class="rationale-block"><h4>${h1}</h4><p>${p1}</p></div>
-    <div class="rationale-block"><h4>${h2}</h4><p>${p2}</p></div>
-    <div class="rationale-block"><h4>${h3}</h4><p>${p3}</p></div>
-    <div class="rationale-block"><h4>${h4}</h4><p>${p4}</p></div>
-  `;
-    }
+    // Day 20 screens
+    const screensDay20 = {
+      onboarding_d20: {
+        title: "AI Capability Onboarding (Day 20)",
+        next: "input_d20",
+        cta: "Bắt đầu",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <div class="hero-layout">
+            <div class="hero-panel" style="background: radial-gradient(circle at 20% 0%, rgba(233, 199, 109, 0.15), transparent 45%), linear-gradient(145deg, #0d3844, #121e28);">
+              <div class="label">Day 20 Redesigned Flow</div>
+              <h2>Trải nghiệm lập kế hoạch Ninh Bình 1 ngày gọn nhẹ, minh bạch</h2>
+              <p>AI hỗ trợ đề xuất lịch trình dựa trên các thông tin cơ bản. Bạn hoàn toàn làm chủ việc ra quyết định, lưu và điều chỉnh lịch trình.</p>
+            </div>
+            <div class="capability-list">
+              <div class="capability">
+                <div class="icon good">✓</div>
+                <div>
+                  <h3>AI tự động hóa (Act)</h3>
+                  <p>Tạo bản nháp lịch trình lập tức từ 3 thông tin cơ bản, tự sắp xếp lộ trình tối ưu.</p>
+                </div>
+              </div>
+              <div class="capability">
+                <div class="icon warn">?</div>
+                <div>
+                  <h3>AI hỏi ý kiến (Ask)</h3>
+                  <p>Hỏi về phương tiện di chuyển trước khi dựng lịch để đảm bảo độ khả thi.</p>
+                </div>
+              </div>
+              <div class="capability">
+                <div class="icon stop">×</div>
+                <div>
+                  <h3>AI không tự làm (Don't Act)</h3>
+                  <p>Không tự ý đặt vé, không tự chia sẻ dữ liệu hoặc cam kết tuyệt đối các thông tin chưa chắc chắn.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 24px; text-align: right;">
+            <button class="btn btn-primary" data-goto="input_d20">Nhập thông tin ngay →</button>
+          </div>
+        </article>
+        <aside class="rationale-card">
+          <h3>Design Rationale (D20)</h3>
+          <div class="rationale-block">
+            <h4>System → User Onboarding</h4>
+            <p>Đặt kỳ vọng rõ ràng về những gì AI có thể tự làm (Act), phải hỏi (Ask) và không được tự quyết (Don't Act) ngay từ màn hình đầu tiên.</p>
+          </div>
+          <div class="rationale-block">
+            <h4>Friction Reduction</h4>
+            <p>Loại bỏ các giải thích dài dòng ở phiên bản trước, tập trung vào 3 nhóm khả năng trực quan.</p>
+          </div>
+        </aside>
+      </div>`
+      },
+      input_d20: {
+        title: "Trip Input (Day 20)",
+        next: "ask_d20",
+        cta: "Chọn phương tiện",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <h2 class="section-title">Nhập thông tin cơ bản</h2>
+          <p class="section-desc">Để giảm tối đa friction (sự ma sát), chúng tôi chỉ yêu cầu 3 trường nhập liệu cốt lõi dưới đây. Các tùy chọn nâng cao khác sẽ được điều chỉnh trực tiếp trên bản nháp.</p>
+          
+          <div class="form-grid">
+            <div class="field"><label>Điểm đến</label><input value="Ninh Bình" readonly style="background: #fdfaf2;" /></div>
+            <div class="field"><label>Ngày đi</label><input value="Thứ Bảy tuần này" /></div>
+            <div class="field full"><label>Số người tham gia</label><select id="groupSizeSelect"><option>2 người (Cặp đôi)</option><option selected>3 người (Gia đình có người lớn tuổi)</option><option>5+ người (Nhóm bạn)</option></select></div>
+          </div>
+          
+          <div class="notice success" style="margin-top: 20px;">
+            💡 <strong>Mẹo nhỏ:</strong> Điểm xuất phát mặc định được tự động nhận diện từ vị trí của bạn (Hà Nội).
+          </div>
+          
+          <div class="status-row">
+            <span class="status-pill act">ACT: Tự động điền điểm xuất phát</span>
+            <span class="status-pill ask">ASK: Sẽ hỏi phương tiện tiếp theo</span>
+          </div>
+          
+          <div class="footer-actions" style="margin-top: 24px;">
+            <button class="btn btn-primary" data-goto="ask_d20">Tiếp tục chọn phương tiện →</button>
+            <button class="btn btn-ghost" data-goto="onboarding_d20">Quay lại</button>
+          </div>
+        </article>
+        <aside class="rationale-card">
+          <h3>Design Rationale (D20)</h3>
+          <div class="rationale-block">
+            <h4>Giảm ma sát (Friction Audit)</h4>
+            <p>Rút gọn từ 7 trường xuống còn 3 trường nhập liệu. Không hỏi về ngân sách, sở thích hay nhịp đi ở giai đoạn này để đưa user tới core value nhanh nhất.</p>
+          </div>
+          <div class="rationale-block">
+            <h4>Progressive Disclosure</h4>
+            <p>Chỉ thu thập thông tin tối thiểu cần thiết để tạo bản nháp đầu tiên.</p>
+          </div>
+        </aside>
+      </div>`
+      },
+      ask_d20: {
+        title: "Ask State: Transport Mode",
+        next: "draft_d20",
+        cta: "Tạo lịch trình",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <div class="notice">
+            ⚠️ <strong>AI cần hỏi trước:</strong> Phương tiện di chuyển ảnh hưởng 80% đến tính khả thi của lịch trình 1 ngày (thời gian di chuyển chặng, điểm đỗ xe, nhịp nghỉ).
+          </div>
+          <h2 class="section-title">Bạn dự định di chuyển bằng gì?</h2>
+          
+          <div class="choice-grid" id="transportChoicesD20">
+            <button class="choice selected"><strong>Limousine đưa đón</strong><span>Có giờ cố định, thời gian di chuyển giữa các điểm cần được tối ưu chặt chẽ.</span></button>
+            <button class="choice"><strong>Xe cá nhân (Ô tô/Xe máy)</strong><span>Chủ động thời gian, lịch trình có thể linh hoạt nhiều chặng hơn.</span></button>
+            <button class="choice"><strong>Chưa quyết định</strong><span>AI sẽ đề xuất dựa trên phương tiện phổ biến nhất (Xe limousine).</span></button>
+          </div>
+          
+          <div class="status-row">
+            <span class="status-pill ask">ASK: Đang chờ lựa chọn của bạn</span>
+          </div>
+          
+          <div class="footer-actions" style="margin-top: 24px;">
+            <button class="btn btn-primary" data-goto="draft_d20">Tạo lịch trình Ninh Bình →</button>
+            <button class="btn btn-ghost" data-goto="input_d20">Quay lại</button>
+          </div>
+        </article>
+        <aside class="rationale-card">
+          <h3>Design Rationale (D20)</h3>
+          <div class="rationale-block">
+            <h4>Ask Before Act</h4>
+            <p>Hỏi về phương tiện TRƯỚC KHI tạo bản nháp. Ở luồng cũ (Day 18), AI tự ý tạo bản nháp rồi mới hỏi phương tiện, dẫn đến việc phải tính toán lại lịch trình gây phiền cho user.</p>
+          </div>
+          <div class="rationale-block">
+            <h4>Hạ độ ma sát</h4>
+            <p>Cung cấp các nút lựa chọn nhanh kèm giải thích hệ quả để user dễ dàng ra quyết định.</p>
+          </div>
+        </aside>
+      </div>`
+      },
+      draft_d20: {
+        title: "AI Draft Itinerary (Day 20)",
+        next: "recovery_d20",
+        cta: "Lưu lịch trình",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <h2 class="section-title">Lịch trình đề xuất cho bạn</h2>
+          <p class="section-desc">Đây là bản nháp đầu tiên dựa trên thông tin: 3 người (gia đình có người lớn tuổi) đi bằng Limousine.</p>
+          
+          <div class="notice" style="background: #eef7f9; border-color: #bee5eb; color: #0c5460; margin-bottom: 20px;">
+            🔍 <strong>Dữ kiện & Giả định của AI:</strong> Xuất phát từ Hà Nội lúc 7:30 sáng, di chuyển bằng Limousine, sức khỏe nhóm bình thường. 
+            <a href="#" id="toggleEvidenceBtn" style="color: var(--teal-2); font-weight: 700; text-decoration: underline; margin-left: 8px;">Xem chi tiết & kiểm soát →</a>
+          </div>
 
-    function timeline(time, title, desc, tag) {
-      return `<div class="timeline-item"><div class="timeline-time">${time}</div><div><h3>${title}</h3><p>${desc}</p></div><span class="tag">${tag}</span></div>`;
-    }
+          <!-- Hidden detailed evidence panel that toggles -->
+          <div id="detailedEvidencePanel" class="info-box" style="display: none; margin-bottom: 20px; border-color: var(--gold); background: var(--cream-2);">
+            <h3 style="color: var(--gold); margin-top: 0; font-size: 1.1rem;">Assumptions & Trust Calibration</h3>
+            <ul style="margin: 0; padding-left: 20px; font-size: 0.92rem; line-height: 1.6;">
+              <li><strong>Dữ kiện đã xác nhận:</strong> Đi từ Hà Nội, nhóm 3 người, có người lớn tuổi, dùng Limousine.</li>
+              <li><strong>Giả định chưa kiểm chứng:</strong> Thích tham quan thiên nhiên, thời gian ăn trưa cố định 1 tiếng.</li>
+              <li><strong>Cảnh báo (Uncertainty):</strong> Giờ tàu chạy, giá vé Tràng An có thể biến động vào dịp lễ. AI không tự ý đặt booking.</li>
+            </ul>
+          </div>
 
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-time">07:30</div>
+              <div>
+                <h3>Limousine đón tại Hà Nội</h3>
+                <p>Xe đón tận nơi theo yêu cầu của đoàn gia đình.</p>
+              </div>
+              <span class="tag">Đã khớp</span>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">09:45</div>
+              <div>
+                <h3>Khu du lịch sinh thái Tràng An</h3>
+                <p>Đi thuyền ngắm cảnh (tuyến 2 - 3 tiếng). Cảnh đẹp, đi lại chủ yếu ngồi thuyền nên rất phù hợp người lớn tuổi.</p>
+              </div>
+              <span class="tag">Đề xuất chính</span>
+            </div>
+            
+            <!-- Inline uncertainty warning directly on the point -->
+            <div class="notice danger" style="padding: 10px 14px; margin: 4px 0 12px 90px; font-size: 0.88rem; display: block; width: auto;">
+              ⚠️ <strong>AI chưa chắc chắn:</strong> Giá vé thuyền Tràng An hiện tại là 250.000đ/người. Giá thực tế tại quầy vé có thể thay đổi nhẹ. AI không tự động thanh toán.
+            </div>
 
-    const order = ["onboarding", "input", "draft", "evidence", "ask", "recovery", "uncertainty", "feedback", "review"];
-    let current = "onboarding";
+            <div class="timeline-item">
+              <div class="timeline-time">13:00</div>
+              <div>
+                <h3>Ăn trưa tại nhà hàng đặc sản gần Tràng An</h3>
+                <p>Thưởng thức cơm cháy, thịt dê. Nghỉ ngơi hồi sức.</p>
+              </div>
+              <span class="tag">Ăn uống</span>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">14:30</div>
+              <div>
+                <h3>Chinh phục đỉnh Hang Múa</h3>
+                <p>Leo 486 bậc đá ngắm toàn cảnh Tam Cốc. Đây là chặng hoạt động thể lực tương đối nặng.</p>
+              </div>
+              <span class="tag" style="background: #ffe8e6; color: var(--red);">Rủi ro sức khỏe</span>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">17:00</div>
+              <div>
+                <h3>Xe Limousine đón về Hà Nội</h3>
+                <p>Kết thúc hành trình 1 ngày.</p>
+              </div>
+              <span class="tag">Kết thúc</span>
+            </div>
+          </div>
+
+          <div class="footer-actions" style="margin-top: 24px;">
+            <button class="btn btn-primary" data-goto="review_d20">Lưu lịch trình này →</button>
+            <button class="btn btn-ghost" data-goto="recovery_d20" style="border-color: var(--orange); color: var(--orange); background: #fffdf5;">⚠️ Lịch này hơi mệt (Có người lớn tuổi)</button>
+            <button class="btn btn-ghost" data-goto="ask_d20">Quay lại</button>
+          </div>
+        </article>
+        <aside class="rationale-card">
+          <h3>Design Rationale (D20)</h3>
+          <div class="rationale-block">
+            <h4>Delay & Tích hợp (Assumptions)</h4>
+            <p>Không ép user đi qua màn "Evidence" riêng. Tích hợp làm panel ẩn để xem khi cần. Các cảnh báo về giá vé/giờ mở cửa (Uncertainty) hiển thị inline ngay tại vị trí chặng đó.</p>
+          </div>
+          <div class="rationale-block">
+            <h4>Dễ dàng sửa lỗi (Recovery)</h4>
+            <p>Nút "Lịch hơi mệt" nổi bật ngay cạnh nút chính để người dùng sửa đổi nhanh chóng khi phát hiện rủi ro leo trèo đối với người lớn tuổi.</p>
+          </div>
+        </aside>
+      </div>`
+      },
+      recovery_d20: {
+        title: "Recovery: Adjusted Itinerary",
+        next: "review_d20",
+        cta: "Lưu lịch trình",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <div class="notice success">
+            ✓ <strong>Đã ghi nhận phản hồi:</strong> Giảm tải hoạt động thể lực, rút bớt chặng leo trèo cho gia đình có người lớn tuổi.
+          </div>
+          
+          <h2 class="section-title">So sánh lịch trình điều chỉnh</h2>
+          <p class="section-desc">AI đã thay thế điểm leo núi Hang Múa bằng Tuyệt Tình Cốc (Chùa Am Tiên) bằng phẳng, dễ đi và thơ mộng hơn.</p>
+          
+          <div class="compare-grid">
+            <div class="compare-card">
+              <h3 style="color: var(--muted); text-decoration: line-through;">Lịch cũ (Hơi mệt)</h3>
+              <ul style="font-size: 0.95rem; line-height: 1.8;">
+                <li>09:45 — Đi thuyền Tràng An</li>
+                <li>13:00 — Ăn trưa tại nhà hàng</li>
+                <li style="color: var(--red); font-weight: 700; text-decoration: line-through;">14:30 — Leo 486 bậc Hang Múa</li>
+                <li>17:00 — Limousine đón về Hà Nội</li>
+              </ul>
+            </div>
+            <div class="compare-card after">
+              <h3 style="color: var(--green); font-weight: 700;">Lịch mới (Nhẹ nhàng)</h3>
+              <ul style="font-size: 0.95rem; line-height: 1.8;">
+                <li>09:45 — Đi thuyền Tràng An</li>
+                <li>13:00 — Ăn trưa + Nghỉ trưa dài hơn</li>
+                <li style="color: var(--green); font-weight: 700;">14:45 — Tuyệt Tình Cốc (bằng phẳng, đi xe điện)</li>
+                <li>17:15 — Limousine đón về Hà Nội</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="footer-actions" style="margin-top: 24px;">
+            <button class="btn btn-primary" data-goto="review_d20">Tiếp tục tới Review & Lưu →</button>
+            <button class="btn btn-ghost" data-goto="draft_d20">Quay lại bản nháp</button>
+          </div>
+        </article>
+        <aside class="rationale-card">
+          <h3>Design Rationale (D20)</h3>
+          <div class="rationale-block">
+            <h4>Minh bạch Trước/Sau</h4>
+            <p>Hiển thị so sánh song song Before/After để người dùng thấy rõ AI đã thực sự lắng nghe và thay đổi đúng vị trí có lỗi (Hang Múa -> Tuyệt Tình Cốc).</p>
+          </div>
+          <div class="rationale-block">
+            <h4>Recovery Flow</h4>
+            <p>Lịch trình được bổ sung 15 phút buffer nghỉ ngơi để đảm bảo người lớn tuổi có thể phục hồi sức khỏe tốt nhất.</p>
+          </div>
+        </aside>
+      </div>`
+      },
+      review_d20: {
+        title: "Final Review & Save (Day 20)",
+        next: "onboarding_d20",
+        cta: "Restart",
+        html: `
+      <div class="screen-grid">
+        <article class="demo-card">
+          <h2 class="section-title">Xem lại & Lưu lịch trình</h2>
+          <p class="section-desc">Mọi thứ đã sẵn sàng. Lịch trình này được thiết kế tối ưu cho gia đình có người lớn tuổi đi bằng xe Limousine.</p>
+          
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-time">07:30</div>
+              <div><h3>Đón tại Hà Nội</h3><p>Limousine đưa đón khứ hồi.</p></div>
+              <span class="tag">Limousine</span>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">09:45</div>
+              <div><h3>KDL Sinh thái Tràng An</h3><p>Ngồi thuyền tuyến 2 nhẹ nhàng.</p></div>
+              <span class="tag">Trực quan</span>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">13:00</div>
+              <div><h3>Ăn trưa & nghỉ ngơi</h3><p>Nghỉ dài 1 tiếng 45 phút.</p></div>
+              <span class="tag">Buffer mệt</span>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">14:45</div>
+              <div><h3>Tuyệt Tình Cốc (Chùa Am Tiên)</h3><p>Đi dạo quanh hồ nước bằng phẳng, không dốc leo núi.</p></div>
+              <span class="tag">Thay thế</span>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">17:15</div>
+              <div><h3>Về lại Hà Nội</h3><p>Kết thúc chuyến đi an toàn.</p></div>
+              <span class="tag">Xong</span>
+            </div>
+          </div>
+          
+          <!-- Integrated Feedback Loop -->
+          <div style="margin-top: 24px; padding: 18px; background: #faf8f5; border: 1px solid var(--line); border-radius: 18px;">
+            <h3 style="margin-top: 0; font-size: 1rem; color: var(--navy);">Gửi phản hồi nhanh cho AI cải thiện:</h3>
+            <div class="feedback-grid" id="feedbackChoicesD20">
+              <button class="feedback-option"><strong>Quá dày</strong><span>Muốn thong thả hơn</span></button>
+              <button class="feedback-option"><strong>Vượt chi phí</strong><span>Muốn ăn uống rẻ hơn</span></button>
+              <button class="feedback-option"><strong>Sai điểm đến</strong><span>Thay đổi địa điểm khác</span></button>
+              <button class="feedback-option"><strong>Khác</strong><span>Gõ phản hồi tự do</span></button>
+            </div>
+          </div>
+          
+          <div class="footer-actions" style="margin-top: 24px;">
+            <button class="btn btn-primary" id="btnSaveItineraryD20">💾 Lưu lịch trình (Core Action)</button>
+            <button class="btn btn-ghost" id="btnShareItineraryD20">📤 Chia sẻ bản nháp</button>
+            <button class="btn btn-ghost" id="btnContactHumanD20">📞 Hỗ trợ từ HDV thật</button>
+          </div>
+        </article>
+        <aside class="rationale-card">
+          <h3>Design Rationale (D20)</h3>
+          <div class="rationale-block">
+            <h4>Gộp Luồng Feedback</h4>
+            <p>Thay vì bắt người dùng mở riêng một màn hình để phản hồi (như Day 18), chúng tôi đưa Feedback Loop trở thành widget phụ trong màn Review cuối cùng để tối giản hóa trải nghiệm.</p>
+          </div>
+          <div class="rationale-block">
+            <h4>Core Action & Agency</h4>
+            <p>Lưu lịch trình là Core Action giúp người dùng thu nhận được value. AI không tự ý đặt dịch vụ bên thứ ba (Don't Act) mà chuyển cho HDV thật liên hệ hỗ trợ khi user chủ động nhấn nút.</p>
+          </div>
+        </aside>
+      </div>`
+      }
+    };
+
+    // Worksheets Content
+    const worksheets = {
+      canvas: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>01 — Customer Retention Canvas</h2>
+            <p>Phân tích use case chính của NiBiGo AI Trip Planner nhằm thấu hiểu hành vi du lịch tự nhiên.</p>
+          </div>
+          <div class="canvas-grid">
+            <div class="canvas-card">
+              <h3>The Problem</h3>
+              <p><strong>Bằng chính lời của user:</strong> "Tôi muốn đi du lịch Ninh Bình tự túc 1 ngày cùng gia đình nhưng mỗi lần tự lên kế hoạch mất cả buổi tra Google, vẫn không chắc lịch có hợp lý không, đặc biệt khi trong nhóm có người lớn tuổi và không muốn đi quá nặng."</p>
+            </div>
+            <div class="canvas-card">
+              <h3>The Persona</h3>
+              <p><strong>Đối tượng:</strong> Người tổ chức chuyến đi cho gia đình/bạn bè (22-35 tuổi). Sử dụng điện thoại/laptop vào buổi tối trước kỳ nghỉ để gom dữ liệu.</p>
+            </div>
+            <div class="canvas-card">
+              <h3>Anti-persona</h3>
+              <p><strong>Không phục vụ:</strong> Khách đi tour trọn gói có HDV sẵn; Hướng dẫn viên du lịch chuyên nghiệp; Người đi công tác không có nhu cầu giải trí.</p>
+            </div>
+            <div class="canvas-card">
+              <h3>The Why</h3>
+              <p><strong>Động lực cốt lõi:</strong> Tránh các sai lầm ngoài đời thực gây phiền hà cho người thân (lịch quá dày gây kiệt sức, sai lệch giờ mở cửa/giá vé, phát sinh chi phí).</p>
+            </div>
+            <div class="canvas-card">
+              <h3>The Alternative</h3>
+              <p><strong>Giải pháp thay thế:</strong> Tra cứu Google nhiều tab, viết ra Excel/Notes; hỏi người quen cũ; đọc các bài blog lịch trình mẫu sẵn có.</p>
+            </div>
+            <div class="canvas-card">
+              <h3>The Frequency</h3>
+              <p><strong>Tần suất tự nhiên:</strong> Theo quý hoặc theo mùa (Quarterly/Seasonal, trung bình 2-4 lần/năm). Đây là sản phẩm thuộc nhóm Low-frequency.</p>
+            </div>
+          </div>
+        </div>
+      `,
+      core: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>02 — Core Action & Active User</h2>
+            <p>Xác định hành động tạo giá trị thực và định nghĩa trạng thái hoạt động của người dùng.</p>
+          </div>
+          
+          <div class="canvas-grid">
+            <div class="canvas-card" style="border-color: var(--gold); background: var(--cream-2);">
+              <h3>Core Action</h3>
+              <p style="font-size: 1.1rem; color: var(--navy); line-height: 1.6;">
+                <strong>User lưu lịch trình Ninh Bình hoàn chỉnh sau khi AI đã điều chỉnh ít nhất 1 lần theo phản hồi.</strong>
+              </p>
+              <ul style="margin-top: 12px; padding-left: 20px; color: var(--muted); font-size: 0.95rem;">
+                <li>Hành vi "Lưu lịch trình" chứng minh người dùng đã thu nhận được giá trị thực để đi du lịch.</li>
+                <li>Điều kiện "đã điều chỉnh ít nhất 1 lần" xác nhận AI đã có ích thực tế trong tương tác.</li>
+              </ul>
+            </div>
+            
+            <div class="canvas-card">
+              <h3>Định nghĩa Active User</h3>
+              <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text);">
+                Một user được tính là <strong>Active</strong> khi hoàn thành Core Action (Lưu lịch trình đã chỉnh sửa) ít nhất <strong>1 lần trong vòng 90 ngày</strong>.
+              </p>
+              <p style="margin-top: 12px; font-size: 0.9rem; color: var(--muted);">
+                Chu kỳ 90 ngày (1 quý) phản ánh chính xác nhịp đi du lịch tự nhiên của phân khúc gia đình/bạn trẻ tại Việt Nam.
+              </p>
+            </div>
+          </div>
+        </div>
+      `,
+      frequency: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>03 — Natural Frequency & Retention Metric</h2>
+            <p>Tại sao các chỉ số truyền thống không áp dụng được và lựa chọn chỉ số giữ chân thực tế.</p>
+          </div>
+          
+          <div class="canvas-card" style="margin-bottom: 24px;">
+            <h3>Tại sao không dùng DAU, WAU hay D1/D7 Retention?</h3>
+            <p style="margin-top: 10px;">Lên kế hoạch du lịch là nhu cầu có tần suất rất thấp (Low-frequency). Ép buộc người dùng mở app hàng ngày/hàng tuần khi họ không đi du lịch sẽ tạo ra ma sát lớn (Forced Habit), dẫn đến tỷ lệ gỡ app cao.</p>
+          </div>
+
+          <div class="canvas-grid">
+            <div class="canvas-card">
+              <h3>Retention Metric Phù Hợp</h3>
+              <h4 style="color: var(--gold); font-size: 1.2rem; margin: 0 0 10px;">Quarterly Cohort Retention (QR)</h4>
+              <p>Đo lường tỷ lệ người dùng đã tạo/lưu lịch trình ở quý trước quay lại thực hiện hành động này trong quý hiện tại.</p>
+            </div>
+            
+            <div class="canvas-card">
+              <h3>Các chỉ số hỗ trợ</h3>
+              <ul style="padding-left: 20px; line-height: 1.7; margin: 0;">
+                <li><strong>Trip Completion Rate:</strong> Tỷ lệ nhập thông tin -> lưu lịch thành công.</li>
+                <li><strong>Adjustment Rate:</strong> % lịch trình được chỉnh sửa trước khi lưu.</li>
+                <li><strong>Time-to-First-Save:</strong> Thời gian trung bình từ khi cài đặt/mở app đến khi lưu lịch lần đầu.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `,
+      audit: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>04 — Onboarding Audit</h2>
+            <p>Đánh giá chi tiết từng bước trong luồng Day 18 để xác định rào cản (Friction) và điểm tối ưu.</p>
+          </div>
+          
+          <table class="ws-table">
+            <thead>
+              <tr>
+                <th>Bước</th>
+                <th>Màn hình</th>
+                <th>Nhãn Audit</th>
+                <th>Phân tích Rào cản & Giải pháp</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>AI Onboarding</td>
+                <td><span class="tag" style="background:#e5f7ec; color:var(--green);">KEEP</span></td>
+                <td>Thiết yếu để đặt kỳ vọng đúng về khả năng AI (Act / Ask / Don't Act).</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Trip Input</td>
+                <td><span class="tag" style="background:#fff3d5; color:var(--orange);">SIMPLIFY</span></td>
+                <td>Có tới 7 trường nhập liệu gây ma sát lớn. Cần giảm xuống còn 3 trường cốt lõi.</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>AI Draft</td>
+                <td><span class="tag" style="background:#e5f7ec; color:var(--green);">KEEP</span></td>
+                <td>Nơi đầu tiên mang lại giá trị (Aha Moment) cho người dùng. Phải đưa lên sớm.</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Evidence</td>
+                <td><span class="tag" style="background:#ffe8e6; color:var(--red);">DELAY</span></td>
+                <td>Tách riêng 1 màn hình làm đứt gãy luồng. Nên tích hợp làm panel thu gọn inline trong Draft.</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Ask State</td>
+                <td><span class="tag" style="background:#e5f7ec; color:var(--green);">KEEP</span></td>
+                <td>Hỏi phương tiện rất quan trọng nhưng nên hỏi TRƯỚC khi tạo Draft để tránh tạo lịch sai.</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Recovery</td>
+                <td><span class="tag" style="background:#e5f7ec; color:var(--green);">KEEP</span></td>
+                <td>Luồng khôi phục lỗi cốt lõi khi lịch quá dày, tăng lòng tin người dùng.</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Uncertainty</td>
+                <td><span class="tag" style="background:#ffe8e6; color:var(--red);">DELAY</span></td>
+                <td>Tách màn hình riêng gây mệt mỏi. Nên tích hợp cảnh báo inline trực tiếp ở chặng lịch trình.</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Feedback Loop</td>
+                <td><span class="tag" style="background:#ffe8e6; color:var(--red);">DELAY</span></td>
+                <td>Không cần 1 màn hình riêng. Nên gộp thành 1 phần lựa chọn nhỏ nằm trong Review cuối.</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Final Review</td>
+                <td><span class="tag" style="background:#e5f7ec; color:var(--green);">KEEP</span></td>
+                <td>Màn hình chốt để thực hiện Core Action (Lưu/Chia sẻ lịch trình).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `,
+      redesign: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>05 — Redesigned Onboarding → First Core Action</h2>
+            <p>Hành trình mới rút gọn từ 9 bước xuống 6 bước để tối ưu tốc độ nhận giá trị.</p>
+          </div>
+          
+          <div class="canvas-grid">
+            <div class="canvas-card">
+              <h3>Các cải tiến chính</h3>
+              <ol style="padding-left: 20px; line-height: 1.8; color: var(--muted); margin: 0;">
+                <li><strong>Rút gọn Onboarding:</strong> Chỉ giữ 1 màn hình tóm tắt rõ rệt.</li>
+                <li><strong>Thu gọn biểu mẫu:</strong> Chỉ hỏi Điểm đến, Ngày đi, Số người. Tự động nhận diện điểm xuất phát (Hà Nội).</li>
+                <li><strong>Hỏi trước khi tạo (Ask State dời lên):</strong> Hỏi phương tiện trước khi vẽ lịch để giảm tỷ lệ sai sót ban đầu.</li>
+                <li><strong>Tích hợp thông tin:</strong> Tích hợp Evidence & Cảnh báo không chắc chắn (Uncertainty) trực tiếp trong màn hình Bản nháp dưới dạng cảnh báo inline và panel thu gọn.</li>
+                <li><strong>Gộp phản hồi:</strong> Đưa Feedback Loop vào thẳng màn hình Review cuối cùng.</li>
+              </ol>
+            </div>
+            
+            <div class="canvas-card" style="border-color: var(--teal); background: #f0f7f8;">
+              <h3>Mục tiêu chỉ số luồng mới</h3>
+              <ul style="padding-left: 20px; line-height: 1.8; color: var(--navy); margin: 0;">
+                <li>Giảm 45% thời gian đến Core Action đầu tiên.</li>
+                <li>Giảm tỷ lệ rơi rụng (Drop-off Rate) tại bước nhập thông tin xuống dưới 15%.</li>
+                <li>Đảm bảo người dùng hiểu rõ giới hạn dữ liệu AI mà không cần đọc văn bản dài dòng.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `,
+      comparison: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>06 — Before / After Comparison</h2>
+            <p>So sánh định lượng các chỉ số trải nghiệm trước và sau khi tối ưu hóa Onboarding.</p>
+          </div>
+          
+          <table class="ws-table">
+            <thead>
+              <tr>
+                <th>Tiêu chí</th>
+                <th>Trước tối ưu (Day 18)</th>
+                <th>Sau tối ưu (Day 20)</th>
+                <th>Lý do & Tác động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Số bước tới Core Action</strong></td>
+                <td>9 bước</td>
+                <td style="color:var(--green); font-weight:700;">6 bước</td>
+                <td>Xóa bỏ các màn hình trung gian dư thừa, gộp phản hồi.</td>
+              </tr>
+              <tr>
+                <td><strong>Số trường phải nhập ban đầu</strong></td>
+                <td>7 trường</td>
+                <td style="color:var(--green); font-weight:700;">3 trường</td>
+                <td>Giảm cognitive load, chỉ lấy dữ liệu tối thiểu.</td>
+              </tr>
+              <tr>
+                <td><strong>Vị trí hỏi phương tiện (Ask)</strong></td>
+                <td>Sau khi tạo bản nháp</td>
+                <td style="color:var(--green); font-weight:700;">Trước khi tạo bản nháp</td>
+                <td>Đảm bảo bản nháp đầu tiên có độ chính xác cao nhất.</td>
+              </tr>
+              <tr>
+                <td><strong>Cách hiển thị Giả định (Evidence)</strong></td>
+                <td>Tách riêng 1 màn hình</td>
+                <td style="color:var(--green); font-weight:700;">Tích hợp panel ẩn ở Draft</td>
+                <td>Không làm đứt gãy mạch trải nghiệm chính.</td>
+              </tr>
+              <tr>
+                <td><strong>Cách hiển thị Đóng/Mở cửa (Uncertainty)</strong></td>
+                <td>Tách riêng 1 màn hình</td>
+                <td style="color:var(--green); font-weight:700;">Nhãn cảnh báo inline ở chặng</td>
+                <td>Cảnh báo đúng lúc, đúng ngữ cảnh (Contextual Warning).</td>
+              </tr>
+              <tr>
+                <td><strong>Vị trí Feedback</strong></td>
+                <td>Màn hình riêng cận cuối</td>
+                <td style="color:var(--green); font-weight:700;">Widget tích hợp ở Review</td>
+                <td>Rút ngắn phễu lưu lịch trình.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `,
+      ladder: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>07 — Measurement Ladder</h2>
+            <p>Hệ thống chỉ số hình cây phân cấp từ North Star Metric xuống các chỉ số vận hành.</p>
+          </div>
+          
+          <div class="ladder-container">
+            <div class="ladder-node north-star">
+              <h3>North Star Metric</h3>
+              <p><strong>Tổng số lịch trình Ninh Bình được lưu thành công sau khi AI điều chỉnh ≥ 1 lần</strong></p>
+              <p style="font-size:0.8rem; color:var(--muted); margin-top:4px;">(Đo lường giá trị thực tế chuyển giao tới user)</p>
+            </div>
+            
+            <div class="ladder-connector"></div>
+            
+            <div class="ladder-inputs-row">
+              <div class="ladder-node">
+                <h3>Input Metric 1</h3>
+                <p><strong>Trip Completion Rate</strong></p>
+                <p style="font-size:0.8rem; color:var(--muted);">% user bắt đầu form -> lưu lịch thành công</p>
+              </div>
+              <div class="ladder-node">
+                <h3>Input Metric 2</h3>
+                <p><strong>Adjustment Rate</strong></p>
+                <p style="font-size:0.8rem; color:var(--muted);">% user kích hoạt Recovery/Feedback</p>
+              </div>
+              <div class="ladder-node">
+                <h3>Input Metric 3</h3>
+                <p><strong>Time-to-First-Save</strong></p>
+                <p style="font-size:0.8rem; color:var(--muted);">Thời gian hoàn thành Core Action (TTV)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      northstar: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>08 — North Star & Inputs</h2>
+            <p>Phân tích chỉ số cốt lõi và các tác động đánh đổi khi tối ưu hóa chỉ số sản phẩm.</p>
+          </div>
+          
+          <div class="canvas-grid">
+            <div class="canvas-card">
+              <h3>Leading vs Lagging Indicators</h3>
+              <ul style="padding-left:20px; line-height:1.7; color:var(--muted); margin:0;">
+                <li><strong>Leading Indicator (Chỉ số dẫn dắt):</strong> Tỷ lệ hoàn thành Onboarding nhanh, số lần tương tác nút "Lịch hơi mệt", thời gian Time-to-Value.</li>
+                <li><strong>Lagging Indicator (Chỉ số kết quả):</strong> Tổng số lịch trình được lưu trong tháng, tỷ lệ quay lại sau 90 ngày (Quarterly Retention).</li>
+              </ul>
+            </div>
+            
+            <div class="canvas-card">
+              <h3>Trade-off Analysis (Đánh đổi)</h3>
+              <p style="font-size:0.95rem; line-height:1.6; color:var(--text); margin-bottom:10px;">
+                <strong>Tập trung quá mức vào giảm thiểu số bước Onboarding:</strong>
+              </p>
+              <p style="font-size:0.9rem; color:var(--muted);">
+                Có thể làm AI thiếu thông tin đầu vào sâu hơn -> bản nháp đầu tiên kém cá nhân hóa hơn -> buộc người dùng phải nhấn nút sửa đổi nhiều lần, làm tăng ma sát ở giai đoạn sau. Do đó cần cân bằng ở mức 3 trường nhập liệu cốt lõi + 1 câu hỏi Ask.
+              </p>
+            </div>
+          </div>
+        </div>
+      `,
+      nurture: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>09 — Nature vs Nurture</h2>
+            <p>Chiến lược nuôi dưỡng và duy trì sự hiện diện của sản phẩm dựa trên nhịp sinh hoạt của user.</p>
+          </div>
+          
+          <div class="canvas-grid">
+            <div class="canvas-card">
+              <h3>Nature (Tự nhiên)</h3>
+              <p>Nhu cầu lên lịch đi Ninh Bình xuất phát từ kế hoạch nghỉ ngơi của cá nhân/gia đình. Tần suất thấp và không liên tục. Không thể ép buộc tạo thói quen dùng hàng ngày.</p>
+            </div>
+            <div class="canvas-card">
+              <h3>Nurture (Nuôi dưỡng)</h3>
+              <p>Sử dụng các tác nhân bên ngoài (External Triggers) đúng thời điểm để đánh thức nhu cầu tự nhiên mà không gây phiền nhiễu cho người dùng.</p>
+            </div>
+          </div>
+
+          <h3 style="margin-top:24px; color:var(--navy);">Các điểm chạm Nurture đề xuất</h3>
+          <table class="ws-table">
+            <thead>
+              <tr>
+                <th>Hoạt động Nurture</th>
+                <th>Nội dung / Thông điệp</th>
+                <th>Thời điểm kích hoạt</th>
+                <th>Metric theo dõi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Push gợi ý theo mùa</strong></td>
+                <td>"Ninh Bình mùa lúa chín vàng Tam Cốc đã bắt đầu, lên lịch 1 ngày ngay!"</td>
+                <td>Dịp lễ 30/4, cuối tuần tháng 5-6</td>
+                <td>Tỷ lệ mở app từ push</td>
+              </tr>
+              <tr>
+                <td><strong>Email chăm sóc lịch trình</strong></td>
+                <td>"Lịch trình đi Ninh Bình của bạn còn 3 ngày nữa. Xác nhận lại phương tiện nhé."</td>
+                <td>3 ngày trước ngày đi đã lưu</td>
+                <td>Tỷ lệ click liên hệ HDV</td>
+              </tr>
+              <tr>
+                <td><strong>Ưu đãi dịch vụ liên kết</strong></td>
+                <td>"Giảm 10% vé xe limousine Ninh Bình dành riêng cho lịch trình đã lưu của bạn."</td>
+                <td>Ngay sau khi lưu lịch trình</td>
+                <td>Tỷ lệ quy đổi booking limousine</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `,
+      hook: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>10 — Hook Review</h2>
+            <p>Thiết kế vòng lặp củng cố hành vi người dùng trong phạm vi chuẩn bị cho một chuyến đi.</p>
+          </div>
+          
+          <div class="hook-grid">
+            <div class="hook-quad">
+              <h3>1. Trigger</h3>
+              <ul>
+                <li><strong>Internal:</strong> Lo lắng chuyến đi gia đình gặp trục trặc, mệt mỏi hoặc vượt chi phí.</li>
+                <li><strong>External:</strong> Thông báo đẩy gợi ý mùa du lịch đẹp hoặc email nhắc lịch trình.</li>
+              </ul>
+            </div>
+            <div class="hook-quad">
+              <h3>2. Action</h3>
+              <p>Hành động đơn giản nhất: Mở app, nhập nhanh 3 thông tin và chọn phương tiện di chuyển để xem bản nháp đầu tiên.</p>
+            </div>
+            <div class="hook-quad">
+              <h3>3. Variable Reward</h3>
+              <ul>
+                <li><strong>The Hunt:</strong> Khám phá ra địa điểm Tuyệt Tình Cốc thơ mộng phù hợp cho người lớn tuổi.</li>
+                <li><strong>The Self:</strong> Cảm giác yên tâm, làm chủ và tự tin trước khi chuyến đi diễn ra.</li>
+              </ul>
+            </div>
+            <div class="hook-quad">
+              <h3>4. Investment</h3>
+              <p>Lưu lịch trình vào thiết bị, gán nhãn tùy chỉnh sở thích, chia sẻ liên kết lịch trình với các thành viên khác trong gia đình.</p>
+            </div>
+            <div class="hook-center">NIBIGO</div>
+          </div>
+        </div>
+      `,
+      tracking: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>11 — Metric Tracking Requirement</h2>
+            <p>Đặc tả kỹ thuật các sự kiện cần thu thập trên giao diện mẫu để đo lường phễu chuyển đổi.</p>
+          </div>
+          
+          <h3 style="color:var(--navy);">Bảng yêu cầu sự kiện (Tracking Events)</h3>
+          <table class="ws-table">
+            <thead>
+              <tr>
+                <th>Event Name</th>
+                <th>Khi nào kích hoạt?</th>
+                <th>Properties</th>
+                <th>Tránh ghi nhận sai/trùng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="event-badge">session_start</span></td>
+                <td>Khi user tải trang web lần đầu</td>
+                <td><span class="prop-badge">device</span><span class="prop-badge">timestamp</span></td>
+                <td>Dùng session_id tồn tại trong 30 phút.</td>
+              </tr>
+              <tr>
+                <td><span class="event-badge">form_start</span></td>
+                <td>User thay đổi trường đầu tiên trong form</td>
+                <td><span class="prop-badge">timestamp</span></td>
+                <td>Chỉ ghi nhận tối đa 1 lần per session.</td>
+              </tr>
+              <tr>
+                <td><span class="event-badge">draft_viewed</span></td>
+                <td>Màn hình Draft hiển thị đầy đủ lịch trình</td>
+                <td><span class="prop-badge">num_stops</span><span class="prop-badge">transport_mode</span></td>
+                <td>Dedupe nếu user quay lại từ màn khác.</td>
+              </tr>
+              <tr>
+                <td><span class="event-badge">adjustment_triggered</span></td>
+                <td>User click nút Lịch hơi mệt / nút Feedback</td>
+                <td><span class="prop-badge">trigger_type</span><span class="prop-badge">reason</span></td>
+                <td>Ghi nhận đầy đủ lịch sử click để đo mức độ điều chỉnh.</td>
+              </tr>
+              <tr>
+                <td><span class="event-badge">save_itinerary</span></td>
+                <td>User click "Lưu lịch trình" (Core Action)</td>
+                <td><span class="prop-badge">adjustment_count</span><span class="prop-badge">TTV</span></td>
+                <td>Khóa nút sau khi click để tránh gửi lặp.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="notice success" style="margin-top:24px;">
+            ✓ <strong>Tiêu chí nghiệm thu Tracking:</strong> 1. Không thu thập thông tin định danh cá nhân nhạy cảm; 2. Timestamp sử dụng định dạng nhất quán ISO 8601; 3. Event save_itinerary bắt buộc phải truyền kèm số lần điều chỉnh để kiểm chứng chất lượng AI.
+          </div>
+        </div>
+      `,
+      demopath: `
+        <div class="ws-section-card">
+          <div class="ws-header">
+            <h2>12 — Demo Path</h2>
+            <p>Kịch bản thuyết trình chi tiết chia theo từng mốc thời gian để tối ưu chất lượng báo cáo.</p>
+          </div>
+          
+          <table class="ws-table">
+            <thead>
+              <tr>
+                <th>Mốc thời gian</th>
+                <th>Nội dung thuyết trình chính</th>
+                <th>Màn hình hiển thị</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>0:00 - 0:45</strong></td>
+                <td>Giới thiệu nhóm, bài lab, Use case và Core Action của dự án NiBiGo.</td>
+                <td>Slide 01 / Worksheet 01-02</td>
+              </tr>
+              <tr>
+                <td><strong>0:45 - 1:30</strong></td>
+                <td>Phân tích hành vi tự nhiên (Natural Frequency) & Retention Canvas.</td>
+                <td>Worksheet 01 & 03</td>
+              </tr>
+              <tr>
+                <td><strong>1:30 - 2:15</strong></td>
+                <td>Trình bày kết quả Onboarding Audit luồng cũ và giải thích các cải tiến chính.</td>
+                <td>Worksheet 04 & 05</td>
+              </tr>
+              <tr>
+                <td><strong>2:15 - 3:00</strong></td>
+                <td>Demo trực quan luồng Onboarding tối ưu mới (Onboarding -> Input 3 trường -> Ask).</td>
+                <td>Prototype: Màn 1, 2, 3 (Luồng D20)</td>
+              </tr>
+              <tr>
+                <td><strong>3:00 - 4:00</strong></td>
+                <td>Demo luồng Recovery lỗi ("Lịch hơi mệt") và giải pháp cảnh báo Uncertainty inline.</td>
+                <td>Prototype: Màn 4, 5, 6 (Luồng D20)</td>
+              </tr>
+              <tr>
+                <td><strong>4:00 - 5:00</strong></td>
+                <td>Trình bày chỉ số North Star Metric, Measurement Ladder và phân tích Trade-off.</td>
+                <td>Worksheet 07 & 08</td>
+              </tr>
+              <tr>
+                <td><strong>5:00 - 6:30</strong></td>
+                <td>Giải thích chiến lược Nature vs Nurture và mô hình Hook Model per-trip.</td>
+                <td>Worksheet 09 & 10</td>
+              </tr>
+              <tr>
+                <td><strong>6:30 - 8:00</strong></td>
+                <td>Trình bày bảng đặc tả tracking events, vị trí gắn sự kiện và các tiêu chí nghiệm thu.</td>
+                <td>Worksheet 11</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `
+    };
+
+    const orderDay18 = ["onboarding", "input", "draft", "evidence", "ask", "recovery", "uncertainty", "feedback", "review"];
+    const orderDay20 = ["onboarding_d20", "input_d20", "ask_d20", "draft_d20", "recovery_d20", "review_d20"];
+    
+    let activeFlow = "day20"; // default flow is Day 20
+    let current = "onboarding_d20";
 
     const workspace = document.getElementById("workspace");
     const screenTitle = document.getElementById("screenTitle");
     const nextBtn = document.getElementById("nextBtn");
     const resetBtn = document.getElementById("resetBtn");
-    const sideItems = [...document.querySelectorAll(".side-item")];
-    const flowSteps = [...document.querySelectorAll(".flow-step")];
     const sidebar = document.getElementById("sidebar");
     const mobileMenu = document.getElementById("mobileMenu");
     const backdrop = document.getElementById("backdrop");
+    const flowSelect = document.getElementById("flowSelect");
+    const demoPathHint = document.getElementById("demoPathHint");
+    const eyebrowText = document.getElementById("eyebrowText");
+
+    // Mode Switcher Elements
+    const modePrototypeBtn = document.getElementById("modePrototypeBtn");
+    const modeWorksheetsBtn = document.getElementById("modeWorksheetsBtn");
+    const prototypeContainer = document.getElementById("prototypeContainer");
+    const worksheetsContainer = document.getElementById("worksheetsContainer");
+    const wsWorkspace = document.getElementById("wsWorkspace");
+    const wsTitle = document.getElementById("wsTitle");
+
+    // Dynamic Navigation and Flow Strip Builder
+    function rebuildNavigation() {
+      const sideMenu = document.getElementById("sideMenu");
+      const flowStrip = document.querySelector(".flow-strip");
+      
+      if (activeFlow === "day20") {
+        eyebrowText.textContent = "Prototype · Day 20 Redesigned Onboarding Flow";
+        demoPathHint.textContent = "Onboarding → Quick Input → Choose Transport → Draft (with inline warning/panel) → Recovery Comparison → Review & Save.";
+        
+        sideMenu.innerHTML = `
+          <button class="side-item" data-screen="onboarding_d20"><span>01</span>Onboarding (D20)</button>
+          <button class="side-item" data-screen="input_d20"><span>02</span>Quick Input</button>
+          <button class="side-item" data-screen="ask_d20"><span>03</span>Ask: Transport</button>
+          <button class="side-item" data-screen="draft_d20"><span>04</span>AI Draft (D20)</button>
+          <button class="side-item" data-screen="recovery_d20"><span>05</span>Recovery (D20)</button>
+          <button class="side-item" data-screen="review_d20"><span>06</span>Final Review & Save</button>
+        `;
+        
+        flowStrip.innerHTML = `
+          <div class="flow-step" data-screen="onboarding_d20"><span>Start</span><strong>Onboarding</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" data-screen="input_d20"><span>Input</span><strong>Quick Needs</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" data-screen="ask_d20"><span>Ask</span><strong>Transport</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" data-screen="draft_d20"><span>Act</span><strong>AI Draft</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" data-screen="recovery_d20"><span>Recover</span><strong>Adjusted</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" data-screen="review_d20"><span>End</span><strong>Save & Review</strong></div>
+        `;
+      } else {
+        eyebrowText.textContent = "Prototype · Day 18 Original Flow";
+        demoPathHint.textContent = "Start → Input → Draft → Evidence → Ask → Recovery → Uncertainty → Feedback → Review.";
+        
+        sideMenu.innerHTML = `
+          <button class="side-item" data-screen="onboarding"><span>01</span>Onboarding</button>
+          <button class="side-item" data-screen="input"><span>02</span>Trip Input</button>
+          <button class="side-item" data-screen="draft"><span>03</span>AI Draft</button>
+          <button class="side-item" data-screen="evidence"><span>04</span>Evidence</button>
+          <button class="side-item" data-screen="ask"><span>05</span>Ask State</button>
+          <button class="side-item" data-screen="recovery"><span>06</span>Recovery</button>
+          <button class="side-item" data-screen="uncertainty"><span>07</span>Uncertainty</button>
+          <button class="side-item" data-screen="feedback"><span>08</span>Feedback</button>
+          <button class="side-item" data-screen="review"><span>09</span>Final Review</button>
+        `;
+        
+        flowStrip.innerHTML = `
+          <div class="flow-step" data-screen="onboarding"><span>Start</span><strong>Onboarding</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" data-screen="input"><span>Input</span><strong>Trip Needs</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" data-screen="draft"><span>Act</span><strong>AI Draft</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" data-screen="ask"><span>Ask</span><strong>Transport</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" data-screen="recovery"><span>Recover</span><strong>Too Intense</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" data-screen="uncertainty"><span>Don't Act</span><strong>Uncertain Data</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" data-screen="review"><span>End</span><strong>Review</strong></div>
+        `;
+      }
+      
+      // Hook up listeners
+      const sideItems = [...sideMenu.querySelectorAll(".side-item")];
+      const flowSteps = [...flowStrip.querySelectorAll(".flow-step")];
+      
+      sideItems.forEach(item => {
+        item.addEventListener("click", () => render(item.dataset.screen));
+      });
+      
+      flowSteps.forEach(item => {
+        item.addEventListener("click", () => render(item.dataset.screen));
+      });
+    }
 
     function render(screenId) {
-      const screen = screens[screenId] || screens.onboarding;
+      const activeScreens = activeFlow === "day20" ? screensDay20 : screensDay18;
+      const screen = activeScreens[screenId] || activeScreens[activeFlow === "day20" ? "onboarding_d20" : "onboarding"];
       current = screenId;
       screenTitle.textContent = screen.title;
       nextBtn.textContent = screen.cta || "Next";
       workspace.innerHTML = screen.html;
 
+      // Wrap .demo-card content inside a mobile phone simulator frame
+      const demoCard = workspace.querySelector(".demo-card");
+      if (demoCard) {
+        const originalContent = demoCard.innerHTML;
+        demoCard.innerHTML = `
+          <!-- Phone Status Bar -->
+          <div class="phone-status-bar">
+            <span class="phone-time">09:41</span>
+            <div class="phone-notch"></div>
+            <div class="phone-icons">
+              <span class="phone-icon-signal">📶</span>
+              <span class="phone-icon-wifi">📶</span>
+              <span class="phone-icon-battery">🔋</span>
+            </div>
+          </div>
+          <!-- Phone Scrollable Content -->
+          <div class="phone-body">
+            ${originalContent}
+          </div>
+          <!-- Phone Home Indicator -->
+          <div class="phone-home-indicator-bar">
+            <div class="phone-home-indicator"></div>
+          </div>
+        `;
+      }
+
+      // Update sidebar active classes
+      const sideItems = [...document.querySelectorAll("#sideMenu .side-item")];
+      const flowSteps = [...document.querySelectorAll(".flow-strip .flow-step")];
       sideItems.forEach(item => item.classList.toggle("active", item.dataset.screen === screenId));
       flowSteps.forEach(item => item.classList.toggle("active", item.dataset.screen === screenId));
 
+      // Hook data-goto navigation buttons inside workspace
       workspace.querySelectorAll("[data-goto]").forEach(btn => {
         btn.addEventListener("click", () => render(btn.dataset.goto));
       });
 
+      // Hook choice / feedback items selects
       workspace.querySelectorAll(".choice, .feedback-option").forEach(btn => {
         btn.addEventListener("click", () => {
           const group = btn.parentElement.querySelectorAll(".choice, .feedback-option");
@@ -1244,37 +2828,150 @@
         });
       });
 
+      // Day 20 specific interactive scripts
+      if (screenId === "draft_d20") {
+        const toggleEvidenceBtn = document.getElementById("toggleEvidenceBtn");
+        const detailedEvidencePanel = document.getElementById("detailedEvidencePanel");
+        if (toggleEvidenceBtn && detailedEvidencePanel) {
+          toggleEvidenceBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (detailedEvidencePanel.style.display === "none") {
+              detailedEvidencePanel.style.display = "block";
+              toggleEvidenceBtn.textContent = "Thu gọn giả định ↑";
+            } else {
+              detailedEvidencePanel.style.display = "none";
+              toggleEvidenceBtn.textContent = "Xem chi tiết & kiểm soát →";
+            }
+          });
+        }
+      }
+
+      if (screenId === "review_d20") {
+        const btnSave = document.getElementById("btnSaveItineraryD20");
+        const btnShare = document.getElementById("btnShareItineraryD20");
+        const btnContact = document.getElementById("btnContactHumanD20");
+
+        if (btnSave) {
+          btnSave.addEventListener("click", () => {
+            alert("🎉 [CORE ACTION ĐÃ KÍCH HOẠT]\nLịch trình đã lưu thành công vào thiết bị của bạn! Sự kiện này được gửi lên hệ thống đo lường và đóng góp trực tiếp vào chỉ số North Star Metric.");
+          });
+        }
+        if (btnShare) {
+          btnShare.addEventListener("click", () => {
+            alert("📤 [INVESTMENT SIGNAL]\nĐã tạo liên kết chia sẻ lịch trình Ninh Bình 1 ngày của bạn.");
+          });
+        }
+        if (btnContact) {
+          btnContact.addEventListener("click", () => {
+            alert("📞 [ASK -> HUMAN HANDOFF]\nYêu cầu của bạn đã được chuyển đến hướng dẫn viên tại Ninh Bình. Họ sẽ liên hệ lại với bạn trong 10 phút.");
+          });
+        }
+      }
+
       closeMenu();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function nextScreen() {
-      const screen = screens[current];
-      render(screen.next || order[(order.indexOf(current) + 1) % order.length]);
+      const currentOrder = activeFlow === "day20" ? orderDay20 : orderDay18;
+      const currentIndex = currentOrder.indexOf(current);
+      if (currentIndex !== -1) {
+        render(currentOrder[(currentIndex + 1) % currentOrder.length]);
+      }
     }
 
-    function resetDemo() { render("onboarding"); }
+    function resetDemo() {
+      render(activeFlow === "day20" ? "onboarding_d20" : "onboarding");
+    }
 
+    // Worksheet render engine
+    function renderWorksheet(wsId) {
+      const wsMenu = document.getElementById("wsMenu");
+      const wsItems = [...wsMenu.querySelectorAll(".side-item")];
+      wsItems.forEach(item => item.classList.toggle("active", item.dataset.ws === wsId));
+
+      const titleMap = {
+        canvas: "01 — Customer Retention Canvas",
+        core: "02 — Core Action & Active User",
+        frequency: "03 — Natural Frequency & Retention Metric",
+        audit: "04 — Onboarding Audit Table",
+        redesign: "05 — Redesigned Onboarding Flow",
+        comparison: "06 — Before / After Quantitative Comparison",
+        ladder: "07 — Measurement Ladder Structure",
+        northstar: "08 — North Star Metric & Trade-offs",
+        nurture: "09 — Nature vs Nurture Strategy",
+        hook: "10 — Hook Model Quadrants",
+        tracking: "11 — Metric Tracking Requirement Spec",
+        demopath: "12 — Demo Path 8-Minute Script"
+      };
+
+      wsTitle.textContent = titleMap[wsId] || "Worksheet";
+      wsWorkspace.innerHTML = worksheets[wsId] || "Loading content...";
+      
+      closeMenu();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Toggle Console Modes
+    modePrototypeBtn.addEventListener("click", () => {
+      modePrototypeBtn.classList.add("active");
+      modeWorksheetsBtn.classList.remove("active");
+      prototypeContainer.style.display = "grid";
+      worksheetsContainer.style.display = "none";
+      resetDemo();
+    });
+
+    modeWorksheetsBtn.addEventListener("click", () => {
+      modePrototypeBtn.classList.remove("active");
+      modeWorksheetsBtn.classList.add("active");
+      prototypeContainer.style.display = "none";
+      worksheetsContainer.style.display = "grid";
+      renderWorksheet("canvas");
+    });
+
+    // Flow selector dropdown listener
+    flowSelect.addEventListener("change", (e) => {
+      activeFlow = e.target.value;
+      rebuildNavigation();
+      resetDemo();
+    });
+
+    // Worksheet sidebar buttons listeners
+    const wsMenu = document.getElementById("wsMenu");
+    wsMenu.querySelectorAll(".side-item").forEach(btn => {
+      btn.addEventListener("click", () => {
+        renderWorksheet(btn.dataset.ws);
+      });
+    });
+
+    // Mobile navigation menu handling
     function openMenu() {
-      sidebar.classList.add("open");
+      const activeSidebar = worksheetsContainer.style.display === "none" ? sidebar : document.getElementById("wsSidebar");
+      activeSidebar.classList.add("open");
       backdrop.classList.add("open");
       mobileMenu.textContent = "×";
     }
+
     function closeMenu() {
       sidebar.classList.remove("open");
+      document.getElementById("wsSidebar").classList.remove("open");
       backdrop.classList.remove("open");
       mobileMenu.textContent = "☰";
     }
 
-    sideItems.forEach(item => item.addEventListener("click", () => render(item.dataset.screen)));
-    flowSteps.forEach(item => item.addEventListener("click", () => render(item.dataset.screen)));
     nextBtn.addEventListener("click", nextScreen);
     resetBtn.addEventListener("click", resetDemo);
-    mobileMenu.addEventListener("click", () => sidebar.classList.contains("open") ? closeMenu() : openMenu());
+    mobileMenu.addEventListener("click", () => {
+      const activeSidebar = worksheetsContainer.style.display === "none" ? sidebar : document.getElementById("wsSidebar");
+      activeSidebar.classList.contains("open") ? closeMenu() : openMenu();
+    });
     backdrop.addEventListener("click", closeMenu);
     window.addEventListener("resize", () => { if (window.innerWidth > 760) closeMenu(); });
 
-    render(current);
+    // Initialize Page
+    activeFlow = "day20";
+    rebuildNavigation();
+    render("onboarding_d20");
 
   </script>
 </body>
