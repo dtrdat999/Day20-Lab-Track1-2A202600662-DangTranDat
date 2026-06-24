@@ -45,7 +45,7 @@
       font-family: "Lora", Georgia, serif;
       color: var(--text);
       background: var(--cream);
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
     button, input, select, textarea {
@@ -55,13 +55,12 @@
     .app-shell {
       display: grid;
       grid-template-columns: 320px minmax(0, 1fr);
-      min-height: 100vh;
+      height: 100vh;
     }
 
     /* Sidebar Styles */
     .sidebar {
-      position: sticky;
-      top: 0;
+      position: relative;
       height: 100vh;
       overflow-y: auto;
       padding: 30px 20px;
@@ -159,6 +158,7 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
+      height: 100vh;
     }
 
     .topbar {
