@@ -13,8 +13,8 @@ Bộ sản phẩm tích hợp bao gồm Prototype tương tác và Hệ tài li�
 
 Dự án được tổ chức tự giải thích và đóng gói gọn gàng (Self-contained) để mở trực tiếp trên mọi trình duyệt:
 * **Màn hình chính:**
-  * [index.html](./index.html) — Prototype tương tác Day 18 gốc (gồm bộ chuyển đổi sang console Day 20 và Simulator di động).
-  * [day20.html](./day20.html) — **[MỚI]** Bảng điều khiển thuyết trình tích hợp 18 mục và **Giả lập điện thoại di động (Mobile Simulator) kịch bản Day 20**.
+  * [day18.html](./day18.html) — Prototype tương tác Day 18 gốc (gồm bộ chuyển đổi sang console Day 20 và Simulator di động).
+  * [index.html](./index.html) — **[MỚI]** Bảng điều khiển thuyết trình tích hợp 18 mục và **Giả lập điện thoại di động (Mobile Simulator) kịch bản Day 20**.
 * **Thư mục tài liệu phân tích (`docs/`):**
   * [day20-retention-canvas.md](./docs/day20-retention-canvas.md) — Customer Retention Canvas (Problem, Persona, Anti-Persona, Frequency).
   * [day20-core-action-metrics.md](./docs/day20-core-action-metrics.md) — Định nghĩa Core Job, Core Action, Active User và chỉ số giữ chân 7 ngày.
@@ -37,7 +37,7 @@ cd <tên-thư-mục-dự-án>
 # Chạy server tĩnh bằng npx serve (mặc định mở ở cổng 3000)
 npx serve
 ```
-Sau đó truy cập địa chỉ: **[http://localhost:3000/day20.html](http://localhost:3000/day20.html)** để xem bảng thuyết trình kèm giả lập di động.
+Sau đó truy cập địa chỉ: **[http://localhost:3000/index.html](http://localhost:3000/index.html)** để xem bảng thuyết trình kèm giả lập di động.
 
 ---
 
@@ -59,7 +59,7 @@ Sau đó truy cập địa chỉ: **[http://localhost:3000/day20.html](http://lo
 
 ## 4. Kịch bản Thuyết trình Demo 8 phút (Vietnamese Script Outline)
 
-* **0:00 – 0:45 | Giới thiệu:** Sử dụng [day20.html](./day20.html) (Mục 00). Nêu rõ use case Ninh Bình 1 ngày và lộ trình 2D1N.
+* **0:00 - 0:45 | Giới thiệu:** Sử dụng [index.html](./index.html) (Mục 00). Nêu rõ use case Ninh Bình 1 ngày và lộ trình 2D1N.
 * **0:45 – 1:30 | Canvas & Tần suất:** Trình bày bảng Customer Retention Canvas (Mục 03) và đặc tính Low-frequency của sản phẩm du lịch.
 * **1:30 – 2:15 | Kiểm toán & Sơ đồ phễu:** Chỉ rõ các điểm nghẽn ở Day 18 cũ (Mục 06) và giải pháp rút ngắn luồng ở Mục 07.
 * **2:15 – 3:30 | Demo lập lịch nhanh:** Mở giả lập di động ở **Mục 08**. Nhập 5 thông số chọn nhanh và nhận ngay 3 phương án đối sánh kinh tế / độ mệt (Aha Moment).
@@ -79,4 +79,4 @@ Dự án đã đáp ứng đầy đủ các tiêu chí đánh giá của bài La
 - [x] **Onboarding → First Core Action:** Có Audit Current Flow cụ thể. Cắt giảm ma sát (từ 9 bước xuống 7 bước). Có thiết kế Before/After tường minh dẫn tới First Core Action. Giữ và cải thiện tốt Recovery Flow cảnh báo khả thi từ Day 18.
 - [x] **Metrics & Habit:** Xây dựng Measurement Ladder bài bản. Định nghĩa "7-day Planning Return Rate" làm Retention Metric cực kì hợp lý với du lịch (low-frequency). Xây dựng vòng lặp Nature/Nurture và Hook theo cấp độ chuyến đi.
 - [x] **Tracking:** Event Tracking có định nghĩa đo lường, property đi kèm, giúp tính toán trực tiếp được Input Metrics.
-- [x] **Submission:** Phân định rạch ròi Day 18 (`index.html`) và Day 20 (`day20.html`). Cung cấp sẵn Demo Path kịch bản tối ưu trong 8 phút (Section 17).
+- [x] **Submission:** Phân định rạch ròi Day 18 (`day18.html`) và Day 20 (`index.html`). Cung cấp sẵn Demo Path kịch bản tối ưu trong 8 phút (Section 17).
